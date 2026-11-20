@@ -132,8 +132,9 @@ function route() {
   const [view = '', arg] = location.hash.replace(/^#\/?/, '').split('/');
   const sectionOf = view === 'ex' && exById(arg) ? PARTS[exById(arg).part].section : view;
   document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (sectionOf || 'home')));
-  ({ '': home, uoe: () => section('uoe'), reading: () => section('reading'), ex: () => exercise(arg),
-     drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress })[view]?.() ?? home();
+  const views = { '': home, uoe: () => section('uoe'), reading: () => section('reading'), ex: () => exercise(arg),
+     drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress };
+  (views[view] || home)();
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
@@ -513,7 +514,7 @@ function analyse(text, type) {
   if (type === 'essay' && body.length < 5) notes.push(['bad', `Tenés ${body.length} párrafos de desarrollo: un essay necesita 5 (intro + 3 ideas + conclusión).`]);
   if (['essay', 'article'].includes(type)) body.forEach((p, i) => {
     const k = sentences(p).length;
-    if (k < 3) notes.push(['warn', `Párrafo ${i + 1}: ${k} oración${k === 1 ? '' : 'es'} (tu profe pide mínimo 3).`]);
+    if (k < 3) notes.push(['warn', `Párrafo ${i + 1}: ${k} ${k === 1 ? 'oración' : 'oraciones'} (tu profe pide mínimo 3).`]);
   });
   const allSent = body.flatMap(sentences);
   allSent.forEach(s => {
