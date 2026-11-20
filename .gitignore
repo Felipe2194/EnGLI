@@ -9,3 +9,4 @@ practica/backup/
 # Contenido copiado de terceros (guía web, imagen de libro)
 FCE/Writing B2 First (FCE) Guía complet.txt
 FCE/Passive Voice.jpeg
+.env*
