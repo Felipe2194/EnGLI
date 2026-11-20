@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+@import url('_base.css');
+/* Editorial / revista: serif grande, columnas con filetes, papel de diario */
+:root {
+  --bg: #f6f2e9; --ink: #1a1a1a; --muted: #5e5a52; --line: #1a1a1a;
+  --uoe: #5b3f8c; --reading: #1f6f6b; --drills: #9a6a00; --writing: #9b1c4c; --puntaje: #1f4f8c; --progress: #2f6b2f; --home: #9b1c1c; --listening: #1f6f8c; --speaking: #a8521c; --overall: #9b1c1c;
+  --on-accent: #fff;
+  --font: "Source Serif 4", Georgia, serif; --font-head: "Playfair Display", Georgia, serif; --head-weight: 900; --head-spacing: -.01em; --h1-size: 2.8rem;
+  --card: transparent; --card-border: none; --card-shadow: none; --card-shadow-hover: none; --radius: 0; --radius-sm: 0; --strip: 0px; --hover-move: none;
+  --header-bg: #f6f2e9; --header-border: 4px double #1a1a1a; --header-shadow: none; --nav-radius: 0; --nav-active-bg: transparent; --nav-active-ink: #9b1c1c;
+  --hero-bg: transparent; --hero-ink: #1a1a1a; --hero-shadow: none; --hero-radius: 0;
+  --stat-bg: transparent; --stat-border: none;
+  --feature-bg: transparent; --feature-ink: #1a1a1a;
+  --btn-bg: transparent; --btn-border: 1px solid #1a1a1a; --btn-radius: 0; --btn-hover-move: none; --primary-bg: #1a1a1a; --primary-ink: #f6f2e9; --primary-border: 1px solid #1a1a1a;
+  --input-bg: transparent; --input-border: none; --input-radius: 0; --tag-bg: transparent; --tag-radius: 0;
+  --bar-bg: #e3dccd; --bar-h: 3px; --th-ink: #1a1a1a;
+}
+body { font-size: 17px; }
+.top { flex-direction: column; gap: .3rem; padding: 1rem 1rem .5rem; }
+.brand { font-size: 2.6rem; font-style: italic; letter-spacing: -.02em; line-height: 1; }
+.brand span { display: block; text-align: center; font: 600 .7rem "Source Serif 4"; letter-spacing: .3em; text-transform: uppercase; font-style: normal; margin-top: .3rem; }
+nav { justify-content: center; border-top: 1px solid #1a1a1a; padding-top: .3rem; width: 100%; max-width: 1120px; }
+nav a { text-transform: uppercase; font-size: .72rem; letter-spacing: .14em; font-weight: 600; }
+nav a.active { text-decoration: underline; text-underline-offset: 4px; }
+.countdown { margin: 0; position: absolute; right: 1.2rem; top: 1.2rem; font-style: italic; font-size: .85rem; }
+.hero { border-top: 3px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; padding: 1.5rem 0; align-items: flex-end; }
+.hero h1 { font-size: 3.8rem; line-height: .95; font-style: italic; }
+.hero .kicker { color: #9b1c1c; letter-spacing: .2em; }
+.hero-stats div { border-left: 1px solid #1a1a1a; border-radius: 0; padding: 0 1.2rem; }
+.hero-stats b { font-size: 2.8rem; } .hero-stats span { font-style: italic; font-weight: 400; }
+.card { border-top: 1px solid #1a1a1a; padding: .8rem 0 0; }
+.card.feature { border-top: 4px solid var(--c); }
+.card.feature h3 { font: 900 1.45rem/1.15 "Playfair Display"; }
+.card.feature::after { content: "Leer más →"; position: static; display: block; margin-top: .6rem; font: italic 600 .85rem "Source Serif 4"; color: var(--c); }
+.card.highlight { outline: none; border-top: 4px double #1a1a1a; }
+.grid { gap: 1.8rem 1.6rem; }
+.tag, .card .tag { color: var(--c, var(--accent)); padding: 0; letter-spacing: .16em; font-size: .66rem; font-family: "Source Serif 4"; }
+h2 { border-bottom: 1px solid #1a1a1a; padding-bottom: .3rem; font-size: 1.5rem; font-style: italic; }
+h2::before { display: none; }
+.stat { font-size: 2.2rem; }
+.text p:first-of-type::first-letter { float: left; font: 900 3.6rem/.8 "Playfair Display"; margin: .45rem .5rem 0 0; color: #9b1c1c; }
+.text p { line-height: 2.1; text-align: justify; hyphens: auto; }
+input.gap, select.gap { border-bottom: 1.5px solid #1a1a1a; font-style: italic; }
+.instr { background: transparent; border: none; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; font-style: italic; }
+.prompt { border: none; border-left: 3px solid #9b1c1c; box-shadow: none; background: transparent; font-style: italic; }
+textarea.writing { background: #fbf8f1; border: 1px solid #1a1a1a; box-shadow: none; font-family: "Source Serif 4"; }
+button { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 600; }
+.bar, .bar > i, .badge, .chip, .wc, .timer { border-radius: 0 !important; }
+.bar > i { background: #1a1a1a; }
+.score-big { color: #1a1a1a; font-style: italic; font-size: 3.4rem; }
+.gapnum { border-radius: 0; background: #1a1a1a; }
+.timer { box-shadow: none; border: 1px solid #1a1a1a; background: transparent; font-family: "Playfair Display"; }
+.sent { background: transparent; border: none; border-bottom: 1px solid #c9c1b0; border-radius: 0; }
+@media (max-width: 640px) { .brand { font-size: 2rem; } .countdown { position: static; } .hero h1 { font-size: 2.6rem; } }

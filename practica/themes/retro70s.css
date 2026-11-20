@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('_base.css');
+/* Retro 70s: naranjas, mostaza, marrón, arcoíris setentoso */
+:root {
+  --bg: #f4e4c1; --ink: #3b2414; --muted: #7a5a40; --line: #d9c29a;
+  --uoe: #d9622b; --reading: #2a7f7a; --drills: #e9a23b; --writing: #c8574d; --puntaje: #4a6fa5; --progress: #8a9a3b; --home: #6b3e26; --listening: #3f8f8a; --speaking: #d9622b; --overall: #e9a23b;
+  --on-accent: #fff6e3;
+  --font: "DM Sans", sans-serif; --font-head: "Shrikhand", serif; --head-weight: 400; --h1-size: 2.3rem; --head-spacing: 0;
+  --card: #fdf3df; --card-border: 2px solid #3b2414; --card-shadow: 0 5px 0 #3b2414; --card-shadow-hover: 0 8px 0 #3b2414; --radius: 26px; --radius-sm: 14px; --strip: 0px;
+  --header-bg: #3b2414; --header-ink: #f4e4c1; --header-shadow: 0 4px 0 #e9a23b, 0 8px 0 #d9622b, 0 12px 0 #c8574d; --nav-active-bg: #e9a23b; --nav-active-ink: #3b2414;
+  --hero-ink: #fdf3df; --hero-border: 2px solid #3b2414; --hero-shadow: 0 6px 0 #3b2414; --hero-radius: 32px;
+  --hero-bg: radial-gradient(circle at 100% 115%, #f4e4c1 0 16%, #e9a23b 16% 25%, #d9622b 25% 34%, #c8574d 34% 43%, #8a3b2a 43% 52%, transparent 52%), #2a7f7a;
+  --stat-bg: #fdf3df; --stat-ink: #3b2414; --stat-border: 2px solid #3b2414; --stat-shadow: 0 4px 0 #3b2414;
+  --feature-ink: #fff6e3;
+  --btn-bg: #fdf3df; --btn-border: 2px solid #3b2414; --btn-radius: 999px; --btn-shadow: 0 3px 0 #3b2414; --btn-shadow-hover: 0 5px 0 #3b2414; --btn-active-move: translateY(3px);
+  --input-bg: #fffaf0; --input-border: 2px solid #3b2414; --input-radius: 999px; --tag-radius: 999px; --tag-ink: #fff6e3;
+  --bar-bg: #ecd9b0; --bar-border: 2px solid #3b2414; --bar-h: 14px; --th-ink: #d9622b;
+  --ok: #4f6b16; --ok-soft: #e1ebb8; --bad: #9c2f1f; --bad-soft: #f6c9b8; --sticker: "groovy ✿";
+}
+.top { margin-bottom: 12px; }
+h1, h2 { color: #d9622b; text-shadow: 2px 2px 0 #e9a23b; }
+.hero h1 { color: #fdf3df; text-shadow: 3px 3px 0 #3b2414; }
+h2::before { width: 1.1rem; height: 1.1rem; border-radius: 50%; background: conic-gradient(#e9a23b 0 33%, #d9622b 0 66%, #c8574d 0); }
+.card.feature { border-radius: 26px 26px 26px 6px; }
+.hero::after { font-family: "Shrikhand"; font-weight: 400; font-size: 1rem; background: #e9a23b; color: #3b2414; border: 2px solid #3b2414; }
+.score-big { color: #d9622b; text-shadow: 3px 3px 0 #e9a23b; }
+.bar > i { background: repeating-linear-gradient(90deg, #e9a23b 0 12px, #d9622b 12px 24px, #c8574d 24px 36px); }

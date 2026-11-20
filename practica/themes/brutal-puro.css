@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+@import url('_base.css');
+/* Brutalismo web "puro": HTML crudo, casi sin decoración */
+:root {
+  --bg: #fff; --ink: #000; --muted: #333; --line: #000;
+  --uoe: #0000ee; --reading: #0000ee; --drills: #0000ee; --writing: #0000ee; --puntaje: #0000ee; --progress: #0000ee; --home: #000; --listening: #0000ee; --speaking: #0000ee; --overall: #000;
+  --accent: #0000ee; --on-accent: #fff;
+  --font: "Times New Roman", Times, serif; --font-head: "IBM Plex Mono", monospace; --head-transform: uppercase; --head-weight: 700; --h1-size: 1.9rem;
+  --card: #fff; --card-border: 1px solid #000; --card-shadow: none; --card-shadow-hover: none; --radius: 0; --radius-sm: 0; --strip: 0px; --hover-move: none;
+  --header-bg: #fff; --header-border: 1px solid #000; --header-shadow: none; --nav-radius: 0; --nav-active-bg: #000; --nav-active-ink: #fff;
+  --hero-bg: #fff; --hero-ink: #000; --hero-border: 1px solid #000; --hero-shadow: none; --hero-radius: 0; --stat-bg: #fff; --stat-border: 1px solid #000;
+  --feature-bg: #ffff00; --feature-ink: #000;
+  --btn-bg: #e9e9e9; --btn-border: 2px outset #ccc; --btn-radius: 0; --btn-hover-move: none; --btn-active-move: none; --primary-bg: #e9e9e9; --primary-ink: #000; --primary-border: 2px outset #ccc;
+  --input-radius: 0; --input-border: 1px solid #000; --tag-bg: transparent; --tag-ink: #000; --tag-border: 1px solid #000; --tag-radius: 0;
+  --bar-bg: #fff; --bar-border: 1px solid #000; --th-bg: #000; --th-ink: #fff;
+}
+body { font-size: 17px; }
+a { color: #0000ee; } a:visited { color: #551a8b; }
+nav a { color: #0000ee; text-decoration: underline; font-weight: 400; }
+nav a.active { color: #fff; }
+h2::before { display: none; } h2 { border-bottom: 1px solid #000; }
+.card.feature::after { content: "[→]"; font-family: "IBM Plex Mono", monospace; font-size: 1rem; }
+.card.feature .tag { background: #fff; }
+.bar, .bar > i, .badge, .chip, .gapnum, .hero-stats div, .wc, .timer { border-radius: 0 !important; }
+.bar > i, .bar > i.ok, .bar > i.bad, .bar > i.warn { background: #000; }
+.score-big { color: #000; } button:active { border-style: inset; }

@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+@import url('_base.css');
+/* Gamificado (estilo apps de idiomas): colores vivos, botones gordos con "sombra de abajo" */
+:root {
+  --bg: #fff; --ink: #3c3c3c; --muted: #777; --line: #e5e5e5;
+  --uoe: #ce82ff; --reading: #1cb0f6; --drills: #ffc800; --writing: #ff4b4b; --puntaje: #2b70c9; --progress: #58cc02; --home: #58cc02; --listening: #00cd9c; --speaking: #ff9600; --overall: #ffc800;
+  --on-accent: #fff;
+  --font: "Nunito", sans-serif; --head-weight: 900; --h1-size: 2.1rem; --head-spacing: 0;
+  --card: #fff; --card-border: 2px solid #e5e5e5; --card-shadow: 0 4px 0 #e5e5e5; --card-shadow-hover: 0 4px 0 #e5e5e5; --radius: 18px; --radius-sm: 14px; --strip: 0px; --hover-move: none;
+  --header-bg: #fff; --header-border: 2px solid #e5e5e5; --header-shadow: none; --nav-radius: 12px; --nav-active-bg: #ddf4ff; --nav-active-ink: #1899d6; --nav-active-border: #84d8ff;
+  --hero-bg: #58cc02; --hero-ink: #fff; --hero-shadow: 0 6px 0 #46a302; --hero-radius: 22px;
+  --stat-bg: rgba(255,255,255,.2); --stat-border: 2px solid rgba(255,255,255,.4); --stat-shadow: 0 4px 0 rgba(0,0,0,.12);
+  --feature-ink: #fff;
+  --btn-bg: #fff; --btn-ink: #4b4b4b; --btn-border: 2px solid #e5e5e5; --btn-radius: 16px; --btn-shadow: 0 4px 0 #e5e5e5; --btn-shadow-hover: 0 4px 0 #e5e5e5;
+  --btn-shadow-active: 0 0 0 #e5e5e5; --btn-hover-move: none; --btn-active-move: translateY(4px); --primary-border: none;
+  --input-bg: #f7f7f7; --input-border: 2px solid #e5e5e5; --input-radius: 12px; --tag-radius: 8px;
+  --bar-bg: #e5e5e5; --bar-h: 16px; --th-ink: #afafaf;
+  --ok: #58a700; --ok-soft: #d7ffb8; --bad: #ea2b2b; --bad-soft: #ffdfe0; --warn: #cd7900; --warn-soft: #fff5d3;
+  --sticker: "🔥 racha";
+}
+body { font-weight: 700; }
+h1 { color: #4b4b4b; }
+h2::before { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 70%, #000); }
+a.card:active { transform: translateY(4px); box-shadow: none; }
+a.card:hover { background: #f7f7f7; }
+.card.feature { border: none; box-shadow: 0 5px 0 color-mix(in srgb, var(--c) 72%, #000); }
+a.card.feature:hover { background: var(--c); filter: brightness(1.05); }
+.card.feature .tag { background: rgba(255,255,255,.25); color: #fff; }
+.card.feature::after { width: 2.3rem; height: 2.3rem; display: grid; place-items: center; border-radius: 50%; background: #fff; color: var(--c); font-size: 1.1rem; box-shadow: 0 3px 0 rgba(0,0,0,.15); }
+.card.highlight { outline: none; border-color: var(--c); box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 72%, #000); }
+.tag, .card .tag { box-shadow: 0 2px 0 color-mix(in srgb, var(--c, var(--accent)) 70%, #000); }
+.stat { color: var(--c, var(--ink)); }
+.bar > i { position: relative; box-shadow: inset 0 -4px 0 rgba(0,0,0,.08); }
+.bar > i::after { content: ""; position: absolute; left: 8px; right: 8px; top: 3px; height: 4px; border-radius: 9px; background: rgba(255,255,255,.35); }
+button.primary, .btn.primary { text-transform: uppercase; letter-spacing: .05em; box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 70%, #000); }
+button.primary:active { box-shadow: none; }
+button { text-transform: uppercase; letter-spacing: .04em; font-weight: 800; }
+.chip.active { box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 70%, #000); border-color: transparent; }
+.hero::after { background: #ff9600; color: #fff; box-shadow: 0 3px 0 #cc7800; font-family: "Nunito"; font-weight: 900; }
+.hero-stats b { font-weight: 900; }
+.instr { border-left: none; border: 2px solid color-mix(in srgb, var(--accent) 45%, #fff); border-radius: 16px; background: color-mix(in srgb, var(--accent) 12%, #fff); }
+.gapnum { box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 70%, #000); }
+.score-big { color: var(--accent); font-size: 3rem; }
+.fb { border-left: none; border-radius: 16px; font-weight: 700; }
+.fb.ok { border: 2px solid #b8f28b; } .fb.bad { border: 2px solid #ffc1c1; }
+.timer { box-shadow: 0 4px 0 #e5e5e5; border: 2px solid #e5e5e5; }
+.q label.opt { border: 2px solid #e5e5e5; border-radius: 14px; box-shadow: 0 3px 0 #e5e5e5; margin-top: .45rem; }
+.q label.opt:has(input:checked) { border-color: #84d8ff; background: #ddf4ff; box-shadow: 0 3px 0 #84d8ff; }

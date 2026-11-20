@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+@import url('_base.css');
+/* Aurora / mesh gradients: manchas de color difuminadas que se mueven lento */
+:root {
+  --bg: #0b1026; --ink: #eef2ff; --muted: #a5b0d6; --line: rgba(255,255,255,.12);
+  --uoe: #c4b5fd; --reading: #5eead4; --drills: #fcd34d; --writing: #f9a8d4; --puntaje: #93c5fd; --progress: #86efac; --home: #a5b4fc; --listening: #67e8f9; --speaking: #fdba74; --overall: #5eead4;
+  --on-accent: #0b1026;
+  --font: "Sora", sans-serif; --head-weight: 700; --head-spacing: -.03em; --h1-size: 2.3rem;
+  --card: rgba(255,255,255,.06); --card-border: 1px solid rgba(255,255,255,.12); --card-filter: blur(12px);
+  --card-shadow: 0 10px 30px -12px rgba(0,0,0,.5); --card-shadow-hover: 0 18px 40px -12px rgba(94,234,212,.3); --radius: 20px; --radius-sm: 12px; --strip: 0px;
+  --header-bg: rgba(11,16,38,.55); --header-filter: blur(16px); --header-border: 1px solid rgba(255,255,255,.08); --header-shadow: none;
+  --nav-active-bg: rgba(255,255,255,.14); --nav-active-ink: #fff;
+  --hero-bg: rgba(255,255,255,.07); --hero-ink: #fff; --hero-border: 1px solid rgba(255,255,255,.16); --hero-shadow: 0 30px 60px -30px rgba(0,0,0,.6); --hero-radius: 28px;
+  --stat-bg: rgba(255,255,255,.08); --stat-border: 1px solid rgba(255,255,255,.16);
+  --feature-ink: #fff;
+  --btn-bg: rgba(255,255,255,.08); --btn-ink: #eef2ff; --btn-border: 1px solid rgba(255,255,255,.18); --btn-radius: 999px;
+  --primary-bg: linear-gradient(90deg, #5eead4, #a5b4fc, #f9a8d4); --primary-ink: #0b1026; --primary-border: none;
+  --input-bg: rgba(255,255,255,.07); --input-border: 1px solid rgba(255,255,255,.2); --input-radius: 8px; --tag-radius: 999px;
+  --bar-bg: rgba(255,255,255,.1); --th-ink: #a5b0d6;
+  --ok: #86efac; --ok-soft: rgba(34,197,94,.16); --bad: #fda4af; --bad-soft: rgba(244,63,94,.16); --warn: #fde68a; --warn-soft: rgba(245,158,11,.16);
+}
+body::before { content: ""; position: fixed; inset: -25%; z-index: -1; pointer-events: none; filter: blur(60px); opacity: .85;
+  background: radial-gradient(35% 30% at 20% 30%, #22d3ee, transparent 70%), radial-gradient(30% 30% at 80% 20%, #a855f7, transparent 70%),
+              radial-gradient(40% 35% at 60% 80%, #10b981, transparent 70%), radial-gradient(25% 25% at 30% 85%, #ec4899, transparent 70%);
+  animation: aurora 22s ease-in-out infinite alternate; }
+@keyframes aurora { 50% { transform: translate(6%, -4%) rotate(8deg) scale(1.08); } 100% { transform: translate(-5%, 5%) rotate(-6deg) scale(1.12); } }
+h1 { background: linear-gradient(90deg, #5eead4, #a5b4fc, #f9a8d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 { background: linear-gradient(90deg, #fff, #c7d2fe); -webkit-background-clip: text; background-clip: text; }
+h2::before { width: .55rem; height: .55rem; border-radius: 50%; background: linear-gradient(135deg, #5eead4, #f9a8d4); box-shadow: 0 0 12px #5eead4; }
+.card.feature { background: linear-gradient(140deg, color-mix(in srgb, var(--c) 34%, transparent), rgba(255,255,255,.05)); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+.card.feature .tag { background: rgba(0,0,0,.25); color: #fff; }
+.card[data-sec]:not(.feature) .tag { background: color-mix(in srgb, var(--c) 25%, transparent); color: var(--c); }
+.card.highlight { outline: none; border-color: rgba(94,234,212,.5); box-shadow: 0 0 40px -10px rgba(94,234,212,.4); }
+.bar > i { background: linear-gradient(90deg, var(--c, var(--accent)), #f9a8d4); }
+.score-big { background: linear-gradient(90deg, #5eead4, #a5b4fc, #f9a8d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.instr { background: rgba(255,255,255,.06); backdrop-filter: blur(10px); }
+.sent { background: rgba(255,255,255,.05); }
+.gap.ok, .gap.bad { color: #fff; }

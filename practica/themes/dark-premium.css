@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+@import url('_base.css');
+/* Dark mode "premium" (estilo Linear / Vercel): negro, bordes finos, brillos sutiles */
+:root {
+  --bg: radial-gradient(1100px 420px at 50% -8%, rgba(120,119,198,.28), transparent 70%), #08090a;
+  --ink: #f7f8f8; --muted: #8a8f98; --line: rgba(255,255,255,.08);
+  --uoe: #8b7cf6; --reading: #2dd4bf; --drills: #fbbf24; --writing: #f472b6; --puntaje: #60a5fa; --progress: #4ade80; --home: #8b7cf6; --listening: #22d3ee; --speaking: #fb923c; --overall: #f7f8f8;
+  --on-accent: #08090a;
+  --font: "Geist", "Inter", sans-serif; --head-weight: 600; --head-spacing: -.035em; --h1-size: 2.3rem;
+  --card: rgba(255,255,255,.025); --card-border: 1px solid rgba(255,255,255,.08); --card-shadow: inset 0 1px 0 rgba(255,255,255,.04); --card-shadow-hover: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px rgba(255,255,255,.12);
+  --radius: 12px; --radius-sm: 8px; --strip: 0px; --hover-move: none;
+  --header-bg: rgba(8,9,10,.72); --header-filter: blur(14px); --header-border: 1px solid rgba(255,255,255,.08); --header-shadow: none;
+  --nav-radius: 8px; --nav-active-bg: rgba(255,255,255,.08); --nav-active-ink: #fff;
+  --hero-bg: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); --hero-ink: #f7f8f8; --hero-border: 1px solid rgba(255,255,255,.1); --hero-shadow: 0 30px 80px -30px rgba(120,119,198,.5); --hero-radius: 16px;
+  --stat-bg: rgba(255,255,255,.03); --stat-border: 1px solid rgba(255,255,255,.08);
+  --feature-ink: #f7f8f8;
+  --btn-bg: rgba(255,255,255,.05); --btn-ink: #f7f8f8; --btn-border: 1px solid rgba(255,255,255,.1); --btn-radius: 8px; --btn-hover-move: none;
+  --primary-bg: #f7f8f8; --primary-ink: #08090a; --primary-border: 1px solid #f7f8f8;
+  --input-bg: rgba(255,255,255,.04); --input-border: 1px solid rgba(255,255,255,.14); --input-radius: 6px; --tag-radius: 999px; --tag-bg: transparent;
+  --bar-bg: rgba(255,255,255,.07); --bar-h: 6px; --th-ink: #8a8f98;
+  --ok: #4ade80; --ok-soft: rgba(74,222,128,.1); --bad: #f87171; --bad-soft: rgba(248,113,113,.1); --warn: #fbbf24; --warn-soft: rgba(251,191,36,.1);
+}
+body { font-size: 15px; }
+h1 { background: linear-gradient(180deg, #fff 30%, #8a8f98); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h2 { font-size: 1.05rem; font-weight: 600; } h2::before { width: 6px; height: 6px; border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+.tag, .card .tag { color: var(--c, var(--accent)); border: 1px solid color-mix(in srgb, var(--c, var(--accent)) 35%, transparent); font-weight: 600; letter-spacing: .02em; text-transform: none; font-size: .72rem; }
+.card.feature { background: linear-gradient(180deg, color-mix(in srgb, var(--c) 16%, transparent), rgba(255,255,255,.02) 75%); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent); }
+.card.feature .tag { background: transparent; color: var(--c); }
+.card.feature::after { font-weight: 400; color: var(--muted); }
+a.card:hover { border-color: rgba(255,255,255,.18); }
+.card.highlight { outline: none; border-color: rgba(255,255,255,.2); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); }
+.hero-stats b { font-weight: 600; letter-spacing: -.04em; }
+.stat { font-weight: 600; letter-spacing: -.04em; }
+.badge { font-weight: 500; }
+.instr { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-left: 2px solid var(--accent); }
+.score-big { color: #fff; font-weight: 600; letter-spacing: -.05em; }
+.timer { font-weight: 500; }
+button { font-weight: 500; } button:hover { background: rgba(255,255,255,.09); } button.primary:hover { background: #fff; }
+.gapnum { background: rgba(255,255,255,.1); color: #fff; }
+.keyword { background: transparent; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); }

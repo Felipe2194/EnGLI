@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&display=swap');
+@import url('_base.css');
+/* Hand-drawn / doodle: bordes dibujados a mano, resaltador, papel cuadriculado */
+:root {
+  --bg: linear-gradient(#e6edf7 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, #e6edf7 1px, transparent 1px) 0 0 / 24px 24px, #fdfbf7;
+  --ink: #2d2d2d; --muted: #5d5d5d; --line: #2d2d2d;
+  --uoe: #c9b6ff; --reading: #9ff0d8; --drills: #ffe270; --writing: #ffb3d1; --puntaje: #a9d1ff; --progress: #b9f39a; --home: #ffe270; --listening: #a8ecf5; --speaking: #ffcc99; --overall: #ffe270;
+  --on-accent: #2d2d2d;
+  --font: "Patrick Hand", cursive; --font-head: "Permanent Marker", cursive; --head-weight: 400; --h1-size: 2.3rem; --head-spacing: .01em;
+  --wobbly: 255px 15px 225px 15px / 15px 225px 15px 255px; --wobbly2: 15px 255px 15px 225px / 225px 15px 255px 15px;
+  --card: #fff; --card-border: 2.5px solid #2d2d2d; --card-shadow: 3px 4px 0 #2d2d2d; --card-shadow-hover: 5px 7px 0 #2d2d2d;
+  --radius: var(--wobbly); --radius-sm: var(--wobbly2); --strip: 0px; --hover-move: rotate(-1deg) translateY(-2px);
+  --header-bg: #fdfbf7; --header-border: 2.5px solid #2d2d2d; --header-shadow: none; --nav-radius: var(--wobbly2); --nav-active-bg: #ffe270; --nav-active-ink: #2d2d2d; --nav-active-border: #2d2d2d;
+  --hero-bg: #ffe270; --hero-ink: #2d2d2d; --hero-border: 3px solid #2d2d2d; --hero-shadow: 5px 6px 0 #2d2d2d; --hero-radius: var(--wobbly);
+  --stat-bg: #fff; --stat-border: 2.5px solid #2d2d2d; --stat-shadow: 2px 3px 0 #2d2d2d;
+  --feature-ink: #2d2d2d;
+  --btn-bg: #fff; --btn-border: 2.5px solid #2d2d2d; --btn-radius: var(--wobbly2); --btn-shadow: 2px 3px 0 #2d2d2d; --btn-shadow-hover: 3px 5px 0 #2d2d2d; --btn-hover-move: rotate(-1.5deg); --btn-active-move: translate(2px, 3px);
+  --primary-border: 2.5px solid #2d2d2d;
+  --input-bg: #fff; --input-border: 2px solid #2d2d2d; --input-radius: var(--wobbly2); --tag-border: none; --tag-radius: 0;
+  --bar-bg: #fff; --bar-border: 2px solid #2d2d2d; --bar-h: 14px; --th-ink: #2d2d2d;
+  --sticker: "★ yay!";
+}
+body { font-size: 19px; }
+.tag, .card .tag { background: linear-gradient(transparent 35%, var(--c, var(--accent)) 35% 90%, transparent 90%); font-family: "Patrick Hand"; font-size: .95rem; text-transform: none; letter-spacing: 0; padding: 0 .2rem; }
+.card.feature .tag { background: linear-gradient(transparent 35%, #fff 35% 90%, transparent 90%); }
+.card.highlight { outline: none; background: var(--c); }
+.grid > .card:nth-child(even) { border-radius: var(--wobbly2); }
+h1 { text-decoration: underline wavy var(--accent); text-decoration-thickness: 3px; text-underline-offset: 10px; }
+.hero h1 { text-decoration-color: #2d2d2d; }
+h2::before { content: "✎"; width: auto; height: auto; background: none; font-size: 1.3rem; }
+.hero::after { font-family: "Permanent Marker"; background: #ffb3d1; border: 2.5px solid #2d2d2d; border-radius: var(--wobbly2); color: #2d2d2d; }
+.hero-stats div { border-radius: var(--wobbly2); }
+.card.feature::after { content: "➜"; font-size: 1.5rem; }
+.bar { border-radius: var(--wobbly2); } .bar > i { border-radius: 0; background: repeating-linear-gradient(-45deg, var(--c, var(--accent)) 0 6px, color-mix(in srgb, var(--c, var(--accent)) 60%, #2d2d2d) 6px 8px); }
+.badge { border: 1.5px solid #2d2d2d; border-radius: var(--wobbly2); color: #2d2d2d !important; }
+.gapnum { border-radius: 50% 45% 55% 40%; background: #2d2d2d; color: #fff; }
+.instr { border: 2.5px dashed #2d2d2d; border-left: 2.5px dashed #2d2d2d; border-radius: var(--wobbly2); background: color-mix(in srgb, var(--accent) 35%, #fff); }
+.score-big { color: #2d2d2d; font-size: 3rem; transform: rotate(-3deg); display: inline-block; background: linear-gradient(transparent 50%, var(--accent) 50% 88%, transparent 88%); }
+.fb { border: 2px solid #2d2d2d; border-radius: var(--wobbly2); }
+.sent { border: 2px solid #2d2d2d; }
+textarea.writing { font: 21px/1.6 "Patrick Hand", cursive; }
+.timer { border: 2.5px solid #2d2d2d; }

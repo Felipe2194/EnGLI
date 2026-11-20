@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito:wght@500;700;800&display=swap');
+@import url('_base.css');
+/* Skeuomorfismo de cuaderno: escritorio de madera, hojas rayadas, post-its y cinta */
+:root {
+  --bg: repeating-linear-gradient(92deg, #c79a6b 0 3px, #cfa575 3px 11px, #c89c6d 11px 13px, #d2a979 13px 26px); --ink: #2b2b2b; --muted: #5c5048; --line: #d8cdb8;
+  --uoe: #d7c6ff; --reading: #b5f0e2; --drills: #fff176; --writing: #ffc4dd; --puntaje: #c3dcff; --progress: #ccf5b5; --home: #fff176; --listening: #b8eef7; --speaking: #ffd8b0; --overall: #fff176;
+  --on-accent: #2b2b2b;
+  --font: "Nunito", sans-serif; --font-head: "Kalam", cursive; --head-weight: 700; --h1-size: 2.4rem; --head-spacing: 0;
+  --paper: linear-gradient(90deg, transparent 2.3rem, #f4a3a3 2.3rem 2.4rem, transparent 2.4rem), repeating-linear-gradient(#fffdf5 0 27px, #c9dcf3 27px 28px);
+  --card: var(--paper) #fffdf5; --card-border: none; --card-shadow: 0 1px 2px rgba(0,0,0,.25), 0 8px 18px -6px rgba(60,30,0,.45);
+  --card-shadow-hover: 0 2px 3px rgba(0,0,0,.25), 0 16px 26px -8px rgba(60,30,0,.5); --radius: 3px; --radius-sm: 3px; --strip: 0px; --hover-move: translateY(-2px) rotate(-.4deg);
+  --header-bg: #5b3a29; --header-ink: #f5e6d0; --header-border: 3px dashed #c99b6d; --header-shadow: 0 4px 0 #3e2519, 0 8px 18px rgba(0,0,0,.35);
+  --nav-radius: 6px 6px 0 0; --nav-active-bg: #fffdf5; --nav-active-ink: #2b2b2b;
+  --hero-bg: #fff176; --hero-ink: #2b2b2b; --hero-shadow: 0 2px 2px rgba(0,0,0,.2), 0 18px 24px -12px rgba(60,30,0,.55); --hero-radius: 2px;
+  --stat-bg: #fffdf5; --stat-border: 1px solid #e3d9c3; --stat-shadow: 0 3px 8px -2px rgba(0,0,0,.25);
+  --feature-ink: #2b2b2b;
+  --btn-bg: #fffdf5; --btn-border: 1px solid #b9a58a; --btn-radius: 6px; --btn-shadow: 0 3px 0 #b9a58a; --btn-shadow-hover: 0 5px 0 #b9a58a; --btn-active-move: translateY(3px); --primary-border: 1px solid #b9a58a;
+  --input-bg: transparent; --input-border: none; --input-radius: 0; --tag-radius: 3px;
+  --bar-bg: #ece3cf; --bar-h: 10px; --th-ink: #9b3b3b;
+  --sticker: "";
+}
+body { background-attachment: fixed; }
+.card { padding-left: 3rem; }
+.card.feature, .card.highlight { padding-left: 1.2rem; background: var(--c); border-radius: 2px; box-shadow: 0 2px 2px rgba(0,0,0,.15), 0 14px 20px -10px rgba(60,30,0,.55); }
+.card.feature { background-image: linear-gradient(180deg, rgba(0,0,0,.05), transparent 25%); }
+.card.feature .tag { background: rgba(255,255,255,.6); }
+.grid > .card.feature:nth-child(1) { transform: rotate(-1.5deg); } .grid > .card.feature:nth-child(2) { transform: rotate(1deg); } .grid > .card.feature:nth-child(3) { transform: rotate(-.6deg); }
+.card.highlight { outline: none; }
+.tag, .card .tag { font-family: "Kalam"; font-size: .8rem; text-transform: none; letter-spacing: 0; }
+.hero { transform: rotate(-.7deg); }
+.hero::after { content: ""; width: 130px; height: 30px; top: -14px; left: calc(50% - 65px); right: auto; padding: 0; border-radius: 0; background: rgba(255,255,255,.55); box-shadow: 0 1px 3px rgba(0,0,0,.15); transform: rotate(-3deg); }
+.hero-stats div { transform: rotate(1.5deg); } .hero-stats div:nth-child(2) { transform: rotate(-1.5deg); }
+h1 { color: #1d2a6b; }
+main > h1, main > p, main > h2, main > .muted, main > a { text-shadow: 0 1px 0 rgba(255,255,255,.35); }
+h2 { display: inline-flex; background: linear-gradient(transparent 55%, color-mix(in srgb, var(--accent) 85%, transparent) 55% 90%, transparent 90%); padding: 0 .3rem; }
+h2::before { display: none; }
+.stat { font-family: "Kalam"; font-size: 2.1rem; color: #1d2a6b; }
+.hero-stats b { color: #1d2a6b; }
+input.gap, select.gap { border-bottom: 2px solid #1d2a6b; font-family: "Kalam"; font-size: 1.1rem; color: #1d2a6b; background: rgba(255,255,255,.4); }
+.text p { line-height: 28px; margin-bottom: 28px; }
+textarea.writing { background: var(--paper) #fffdf5; font: 20px/28px "Kalam", cursive; color: #1d2a6b; padding: 0 1.2rem 0 3rem; background-attachment: local; border-radius: 3px; }
+.prompt { background: #fff176; border-left: none; transform: rotate(-.4deg); }
+.instr { background: #fffdf5; border-left: 5px solid #f4a3a3; box-shadow: 0 6px 14px -6px rgba(60,30,0,.45); }
+.score-big { font-family: "Kalam"; color: #c0392b; font-size: 3rem; transform: rotate(-4deg); display: inline-block; border: 3px solid #c0392b; border-radius: 50%; padding: 0 1rem; }
+.gapnum { background: #1d2a6b; color: #fff; }
+.sent { background: #fffdf5; } .sent b { color: #2b2b2b; }
+.toast { background: #fff176; color: #2b2b2b; box-shadow: 0 10px 20px -8px rgba(0,0,0,.5); }
+.top .countdown { font-family: "Kalam"; }

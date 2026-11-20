@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap');
+@import url('_base.css');
+/* Cyberpunk / Neón: negro, neones fucsia y cian, esquinas cortadas, brillo */
+:root {
+  --bg: linear-gradient(rgba(0,255,255,.05) 1px, transparent 1px) 0 0 / 40px 40px, linear-gradient(90deg, rgba(255,0,255,.05) 1px, transparent 1px) 0 0 / 40px 40px, #07070f;
+  --ink: #e0f7ff; --muted: #7f9bb3; --line: rgba(0,255,255,.22);
+  --uoe: #c04bff; --reading: #00fff0; --drills: #fcee0a; --writing: #ff2a6d; --puntaje: #05d9e8; --progress: #39ff14; --home: #ff2a6d; --listening: #05d9e8; --speaking: #ff9e00; --overall: #fcee0a;
+  --on-accent: #000;
+  --font: "Rajdhani", sans-serif; --font-head: "Orbitron", sans-serif; --head-weight: 800; --head-transform: uppercase; --head-spacing: .04em; --h1-size: 1.9rem;
+  --card: rgba(13,13,28,.92); --card-border: 1px solid rgba(0,255,255,.35); --card-shadow: 0 0 18px rgba(0,255,255,.12), inset 0 0 20px rgba(0,255,255,.04);
+  --card-shadow-hover: 0 0 28px rgba(255,42,109,.4); --radius: 0; --radius-sm: 0; --strip: 2px; --hover-move: translateY(-2px);
+  --header-bg: rgba(7,7,15,.9); --header-filter: blur(8px); --header-border: 1px solid #ff2a6d; --header-shadow: 0 0 22px rgba(255,42,109,.35); --nav-radius: 0;
+  --nav-active-bg: transparent; --nav-active-ink: #00fff0; --nav-active-border: #00fff0; --nav-active-shadow: 0 0 12px rgba(0,255,240,.6), inset 0 0 8px rgba(0,255,240,.3);
+  --hero-bg: linear-gradient(100deg, rgba(255,42,109,.18), rgba(5,217,232,.12)), #0d0d1c; --hero-ink: #fff; --hero-border: 1px solid #ff2a6d; --hero-shadow: 0 0 34px rgba(255,42,109,.35); --hero-radius: 0;
+  --stat-bg: rgba(0,0,0,.5); --stat-border: 1px solid #00fff0; --stat-shadow: 0 0 14px rgba(0,255,240,.35);
+  --feature-bg: rgba(13,13,28,.95); --feature-ink: #e0f7ff;
+  --btn-bg: transparent; --btn-ink: #00fff0; --btn-border: 1px solid #00fff0; --btn-radius: 0; --btn-shadow-hover: 0 0 16px rgba(0,255,240,.6); --primary-border: none;
+  --input-bg: #000; --input-border: 1px solid rgba(0,255,255,.5); --input-radius: 0; --tag-radius: 0; --tag-bg: transparent;
+  --bar-bg: rgba(255,255,255,.06); --bar-border: 1px solid rgba(0,255,255,.3); --th-ink: #ff2a6d;
+  --ok: #39ff14; --ok-soft: rgba(57,255,20,.1); --bad: #ff2a6d; --bad-soft: rgba(255,42,109,.14); --warn: #fcee0a; --warn-soft: rgba(252,238,10,.1);
+  --sticker: "// ONLINE";
+}
+body { font-size: 17px; }
+h1 { text-shadow: 0 0 12px var(--accent), 0 0 30px color-mix(in srgb, var(--accent) 50%, transparent); }
+.hero h1 { text-shadow: 0 0 12px #ff2a6d, 0 0 30px #ff2a6d88; }
+h2::before { width: 1rem; height: .3rem; border-radius: 0; box-shadow: 0 0 10px var(--accent); }
+.card { clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); }
+.card[data-sec] { border-color: color-mix(in srgb, var(--c) 55%, transparent); }
+.card.feature { border: 1px solid var(--c); box-shadow: inset 0 0 30px color-mix(in srgb, var(--c) 25%, transparent); }
+.card.feature h3, .card.highlight .stat { color: var(--c); text-shadow: 0 0 10px var(--c); }
+.card.feature .tag { background: var(--c); color: #000; }
+.tag, .card .tag { color: var(--c, var(--accent)); border: 1px solid var(--c, var(--accent)); font-family: "Orbitron"; font-size: .6rem; }
+.card.feature::after { color: var(--c); text-shadow: 0 0 8px var(--c); }
+.hero::after { font-family: "Orbitron"; border-radius: 0; background: #fcee0a; color: #000; transform: none; box-shadow: 0 0 16px #fcee0a; }
+.hero-stats div { border-radius: 0; } .hero-stats b { color: #00fff0; text-shadow: 0 0 12px #00fff0; font-family: "Orbitron"; }
+.stat, .score-big { text-shadow: 0 0 12px currentColor; }
+.score-big { color: var(--accent); }
+.bar > i { box-shadow: 0 0 12px var(--c, var(--accent)); border-radius: 0; } .bar { border-radius: 0; }
+button.primary { text-transform: uppercase; letter-spacing: .08em; box-shadow: 0 0 16px var(--accent); }
+button { text-transform: uppercase; letter-spacing: .06em; }
+.timer { font-family: "Orbitron"; color: #fcee0a; text-shadow: 0 0 8px #fcee0a; }
+.instr { background: rgba(0,0,0,.4); box-shadow: inset 0 0 20px color-mix(in srgb, var(--accent) 15%, transparent); }
+.gapnum, .chip, .badge, .wc { border-radius: 0; }
+.gap.ok, .gap.bad { background: #000; }
+textarea.writing { font-family: "Rajdhani"; font-size: 19px; }

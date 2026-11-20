@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
+@import url('_base.css');
+/* Glassmorphism: tarjetas de vidrio esmerilado sobre un fondo de colores */
+:root {
+  --bg: radial-gradient(at 8% 12%, #8b5cf6 0, transparent 45%), radial-gradient(at 92% 18%, #ec4899 0, transparent 45%),
+        radial-gradient(at 55% 95%, #06b6d4 0, transparent 50%), radial-gradient(at 15% 85%, #f59e0b 0, transparent 35%), #1e1b4b;
+  --ink: #fff; --muted: rgba(255,255,255,.72); --line: rgba(255,255,255,.2);
+  --uoe: #c4b5fd; --reading: #5eead4; --drills: #fcd34d; --writing: #f9a8d4; --puntaje: #93c5fd; --progress: #86efac; --home: #c4b5fd; --listening: #67e8f9; --speaking: #fdba74; --overall: #fcd34d;
+  --on-accent: #1e1b4b;
+  --font: "Inter", sans-serif; --head-weight: 800; --h1-size: 2.2rem;
+  --card: rgba(255,255,255,.12); --card-border: 1px solid rgba(255,255,255,.28); --card-filter: blur(18px) saturate(160%);
+  --card-shadow: 0 8px 32px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.35); --card-shadow-hover: 0 14px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.5);
+  --radius: 22px; --radius-sm: 12px; --strip: 0px;
+  --header-bg: rgba(255,255,255,.1); --header-ink: #fff; --header-filter: blur(20px) saturate(160%); --header-border: 1px solid rgba(255,255,255,.2); --header-shadow: none;
+  --nav-active-bg: rgba(255,255,255,.9); --nav-active-ink: #1e1b4b;
+  --hero-bg: rgba(255,255,255,.14); --hero-ink: #fff; --hero-border: 1px solid rgba(255,255,255,.3); --hero-shadow: 0 20px 50px rgba(0,0,0,.3); --hero-radius: 28px;
+  --stat-bg: rgba(255,255,255,.14); --stat-border: 1px solid rgba(255,255,255,.3);
+  --feature-ink: #fff;
+  --btn-bg: rgba(255,255,255,.14); --btn-ink: #fff; --btn-border: 1px solid rgba(255,255,255,.3); --btn-radius: 14px; --btn-shadow-hover: 0 8px 20px rgba(0,0,0,.25);
+  --primary-bg: rgba(255,255,255,.92); --primary-ink: #1e1b4b; --primary-border: 1px solid #fff;
+  --input-bg: rgba(255,255,255,.14); --input-border: 1px solid rgba(255,255,255,.35); --input-radius: 8px; --tag-radius: 999px;
+  --bar-bg: rgba(255,255,255,.15); --th-ink: rgba(255,255,255,.7);
+  --ok: #86efac; --ok-soft: rgba(34,197,94,.22); --bad: #fda4af; --bad-soft: rgba(244,63,94,.22); --warn: #fde68a; --warn-soft: rgba(245,158,11,.22);
+}
+.card.feature { background: color-mix(in srgb, var(--c) 32%, rgba(255,255,255,.08)); border-color: color-mix(in srgb, var(--c) 60%, transparent); }
+.card.feature .tag { background: rgba(0,0,0,.25); color: #fff; }
+.card[data-sec]:not(.feature) .tag { background: color-mix(in srgb, var(--c) 30%, transparent); color: #fff; border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); }
+.card[data-sec]:not(.feature)::before { content: ""; position: absolute; inset: 0 0 auto; height: 70px; border-radius: inherit; background: linear-gradient(color-mix(in srgb, var(--c) 22%, transparent), transparent); pointer-events: none; }
+.instr { background: rgba(255,255,255,.12); backdrop-filter: blur(12px); }
+.sent { background: rgba(255,255,255,.1); }
+.timer, .prompt, textarea.writing { backdrop-filter: blur(16px); }
+.score-big { color: #fff; text-shadow: 0 0 30px var(--accent); }
+h1 { text-shadow: 0 2px 20px rgba(0,0,0,.25); }
+.gap.ok, .gap.bad { color: #fff; }

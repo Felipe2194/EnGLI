@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+@import url('_base.css');
+/* Claymorphism: elementos inflados tipo plastilina, pastel y muy redondeados */
+:root {
+  --bg: #f3eefe; --ink: #2e1065; --muted: #6b5a99; --line: #e4dafc;
+  --uoe: #c4b5fd; --reading: #99f6e4; --drills: #fde68a; --writing: #fbcfe8; --puntaje: #bfdbfe; --progress: #bbf7d0; --home: #a78bfa; --listening: #a5f3fc; --speaking: #fed7aa; --overall: #fde68a;
+  --on-accent: #2e1065;
+  --font: "Fredoka", sans-serif; --head-weight: 700; --h1-size: 2.3rem; --head-spacing: 0;
+  --clay: 0 18px 30px -12px rgba(110, 80, 200, .45), inset -7px -9px 14px rgba(110, 80, 200, .18), inset 7px 7px 12px rgba(255, 255, 255, .9);
+  --clay-hover: 0 24px 38px -12px rgba(110, 80, 200, .55), inset -7px -9px 14px rgba(110, 80, 200, .18), inset 7px 7px 12px rgba(255, 255, 255, .9);
+  --card: #fff; --card-border: none; --card-shadow: var(--clay); --card-shadow-hover: var(--clay-hover); --radius: 32px; --radius-sm: 20px; --strip: 0px; --hover-move: translateY(-4px) scale(1.01);
+  --header-bg: #fff; --header-shadow: 0 10px 24px -14px rgba(110,80,200,.5); --nav-active-ink: #2e1065; --nav-active-shadow: inset -3px -4px 6px rgba(110,80,200,.2), inset 3px 3px 5px rgba(255,255,255,.9);
+  --hero-bg: #a78bfa; --hero-ink: #fff; --hero-shadow: 0 26px 40px -16px rgba(110,80,200,.65), inset -10px -12px 20px rgba(60,30,140,.25), inset 10px 10px 18px rgba(255,255,255,.35); --hero-radius: 40px;
+  --stat-bg: #fff; --stat-ink: #2e1065; --stat-border: none; --stat-shadow: var(--clay);
+  --feature-ink: #2e1065;
+  --btn-bg: #fff; --btn-border: none; --btn-radius: 20px; --btn-shadow: 0 10px 18px -8px rgba(110,80,200,.45), inset -4px -5px 8px rgba(110,80,200,.15), inset 4px 4px 6px rgba(255,255,255,.9);
+  --btn-shadow-hover: 0 14px 22px -8px rgba(110,80,200,.5), inset -4px -5px 8px rgba(110,80,200,.15), inset 4px 4px 6px rgba(255,255,255,.9);
+  --btn-shadow-active: inset -2px -2px 6px rgba(110,80,200,.2), inset 5px 5px 10px rgba(110,80,200,.25); --btn-hover-move: translateY(-2px); --primary-border: none;
+  --input-bg: #f7f3ff; --input-border: none; --input-shadow: inset 3px 3px 6px rgba(110,80,200,.2), inset -2px -2px 4px #fff; --input-radius: 12px; --tag-radius: 999px;
+  --bar-bg: #ede6ff; --bar-h: 14px;
+}
+.card[data-sec] { box-shadow: var(--clay); } a.card[data-sec]:hover { box-shadow: var(--clay-hover); }
+.card.feature, .card.highlight { box-shadow: 0 18px 30px -12px color-mix(in srgb, var(--c) 80%, #6d28d9), inset -8px -10px 16px rgba(46,16,101,.12), inset 8px 8px 14px rgba(255,255,255,.7); }
+.card.highlight { background: var(--c); outline: none; }
+.card.feature::after { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; background: #fff; font-size: 1.1rem; box-shadow: 0 6px 12px -4px rgba(46,16,101,.4), inset -3px -3px 5px rgba(110,80,200,.2); }
+.card[data-sec]:not(.feature) .tag { box-shadow: inset -2px -2px 4px rgba(46,16,101,.12), inset 2px 2px 3px rgba(255,255,255,.8); }
+.bar > i { box-shadow: inset -2px -3px 4px rgba(46,16,101,.15), inset 2px 2px 3px rgba(255,255,255,.7); }
+.bar { box-shadow: inset 2px 2px 5px rgba(110,80,200,.25); }
+h2::before { width: 1rem; height: 1rem; border-radius: 50%; background: #a78bfa; box-shadow: inset -2px -3px 4px rgba(46,16,101,.3), inset 2px 2px 3px rgba(255,255,255,.7); }
+.instr { border-left: none; border-radius: 22px; box-shadow: var(--clay); background: color-mix(in srgb, var(--accent) 45%, #fff); }
+.gapnum { box-shadow: inset -2px -2px 3px rgba(46,16,101,.2), inset 2px 2px 3px rgba(255,255,255,.7); color: #2e1065; }
+.score-big { color: #7c3aed; }
+.fb { border-left: none; border-radius: 18px; box-shadow: inset -3px -4px 8px rgba(0,0,0,.06), inset 3px 3px 6px rgba(255,255,255,.8); }
+.chip.active { color: #2e1065; }

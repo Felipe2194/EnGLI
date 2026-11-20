@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@500;700;800&display=swap');
+@import url('_base.css');
+/* Memphis (diseño italiano de los 80): formas geométricas, pastel + negro, patrones */
+:root {
+  --bg: #fff8ec; --ink: #1a1a1a; --muted: #555; --line: #1a1a1a;
+  --uoe: #b79cff; --reading: #4ecdc4; --drills: #ffe66d; --writing: #ff8fb1; --puntaje: #6cb4ff; --progress: #8ee08a; --home: #ff6b6b; --listening: #79e0ee; --speaking: #ffb26b; --overall: #ffe66d;
+  --on-accent: #1a1a1a;
+  --font: "Nunito", sans-serif; --font-head: "Righteous", sans-serif; --head-weight: 400; --head-transform: uppercase; --h1-size: 2.3rem;
+  --card-border: 2.5px solid #1a1a1a; --radius: 4px; --radius-sm: 4px; --strip: 0px; --hover-move: translate(-2px, -2px);
+  --header-bg: #1a1a1a; --header-ink: #fff; --header-border: 5px solid #ffe66d; --header-shadow: none; --nav-active-bg: #ff6b6b; --nav-active-ink: #1a1a1a; --nav-radius: 4px;
+  --hero-bg: #ff6b6b; --hero-ink: #1a1a1a; --hero-border: 3px solid #1a1a1a; --hero-shadow: 10px 10px 0 #4ecdc4; --hero-radius: 4px;
+  --stat-bg: #fff; --stat-border: 2.5px solid #1a1a1a; --stat-shadow: 4px 4px 0 #b79cff;
+  --feature-ink: #1a1a1a;
+  --btn-border: 2.5px solid #1a1a1a; --btn-radius: 4px; --btn-shadow: 4px 4px 0 #ff8fb1; --btn-shadow-hover: 6px 6px 0 #ff8fb1; --btn-hover-move: translate(-2px, -2px); --btn-active-move: translate(3px, 3px);
+  --input-border: 2.5px solid #1a1a1a; --input-bg: #fffbe0; --tag-border: 2px solid #1a1a1a; --tag-ink: #1a1a1a; --bar-border: 2.5px solid #1a1a1a; --bar-bg: #fff; --bar-h: 14px;
+  --th-bg: #1a1a1a; --th-ink: #ffe66d; --sticker: "RAD!";
+}
+body { background-image:
+  radial-gradient(circle, #ff6b6b 3px, transparent 3.5px),
+  linear-gradient(135deg, transparent 46%, #4ecdc455 46% 54%, transparent 54%),
+  linear-gradient(45deg, transparent 47%, #b79cff44 47% 53%, transparent 53%);
+  background-size: 70px 70px, 140px 140px, 110px 110px; background-position: 0 0, 30px 10px, 60px 50px; }
+h1 { text-shadow: 3px 3px 0 #4ecdc4; }
+h2::before { width: 1.2rem; height: 1.1rem; border-radius: 0; background: #ff6b6b; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.card { box-shadow: 6px 6px 0 var(--c, #4ecdc4); }
+.card[data-sec], a.card[data-sec]:hover { box-shadow: 6px 6px 0 var(--c); }
+a.card:hover { box-shadow: 9px 9px 0 var(--c, #4ecdc4); }
+.card.feature { background-image: radial-gradient(circle, rgba(26,26,26,.18) 2px, transparent 2.5px); background-size: 16px 16px; box-shadow: 6px 6px 0 #1a1a1a; }
+.card.feature:nth-child(2) { border-radius: 40px 4px 40px 4px; }
+.hero { background-image: repeating-linear-gradient(-45deg, transparent 0 14px, rgba(26,26,26,.08) 14px 18px); }
+.hero::after { font-family: "Righteous"; border: 2.5px solid #1a1a1a; background: #ffe66d; }
+.bar > i { border-radius: 0; } .bar { border-radius: 4px; }
+.gapnum { border-radius: 4px; color: #1a1a1a; border: 2px solid #1a1a1a; }
+.score-big { color: #1a1a1a; text-shadow: 4px 4px 0 var(--accent); }
+.timer { box-shadow: 4px 4px 0 var(--accent); border: 2.5px solid #1a1a1a; }

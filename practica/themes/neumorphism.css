@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap');
+@import url('_base.css');
+/* Neumorphism (soft UI): todo del mismo color, en relieve o hundido con sombras suaves */
+:root {
+  --bg: #e4e9f2; --ink: #3d4a5c; --muted: #7a869a; --line: #cfd6e2;
+  --uoe: #7c6cf0; --reading: #1aa89a; --drills: #d9922b; --writing: #e05a94; --puntaje: #3f83e6; --progress: #26a65b; --home: #7c6cf0; --listening: #1a9fc0; --speaking: #e27a3a; --overall: #7c6cf0;
+  --on-accent: #fff;
+  --font: "Nunito", sans-serif; --head-weight: 800; --h1-size: 2.1rem;
+  --up: 8px 8px 16px #c2c8d4, -8px -8px 16px #ffffff; --up-lg: 14px 14px 28px #c2c8d4, -14px -14px 28px #ffffff;
+  --down: inset 5px 5px 10px #c2c8d4, inset -5px -5px 10px #ffffff;
+  --card: #e4e9f2; --card-border: none; --card-shadow: var(--up); --card-shadow-hover: var(--up-lg); --radius: 24px; --radius-sm: 14px; --strip: 0px; --hover-move: none;
+  --header-bg: #e4e9f2; --header-shadow: 0 6px 14px #c9cfdb; --nav-active-bg: #e4e9f2; --nav-active-ink: var(--uoe); --nav-active-shadow: var(--down);
+  --hero-bg: #e4e9f2; --hero-ink: #3d4a5c; --hero-shadow: var(--up-lg); --hero-radius: 30px;
+  --stat-bg: #e4e9f2; --stat-border: none; --stat-shadow: var(--down);
+  --feature-bg: #e4e9f2; --feature-ink: #3d4a5c;
+  --btn-bg: #e4e9f2; --btn-border: none; --btn-radius: 16px; --btn-shadow: 5px 5px 10px #c2c8d4, -5px -5px 10px #fff; --btn-shadow-hover: 7px 7px 14px #c2c8d4, -7px -7px 14px #fff;
+  --btn-shadow-active: var(--down); --btn-hover-move: none; --btn-active-move: none; --primary-border: none;
+  --input-bg: #e4e9f2; --input-border: none; --input-shadow: inset 3px 3px 6px #c2c8d4, inset -3px -3px 6px #fff; --input-radius: 10px;
+  --tag-bg: transparent; --tag-radius: 999px;
+  --bar-bg: #e4e9f2; --bar-h: 12px;
+}
+.card[data-sec] { box-shadow: var(--up); } a.card[data-sec]:hover { box-shadow: var(--up-lg); }
+.tag, .card .tag { color: var(--c, var(--accent)); box-shadow: inset 2px 2px 4px #c2c8d4, inset -2px -2px 4px #fff; padding: .1rem .6rem; }
+.card.feature .tag { background: transparent; color: var(--c); }
+.card.feature h3 { color: var(--c); }
+.card.feature::after { width: 2.3rem; height: 2.3rem; display: grid; place-items: center; border-radius: 50%; color: var(--c); box-shadow: 4px 4px 8px #c2c8d4, -4px -4px 8px #fff; font-size: 1rem; }
+.bar { box-shadow: inset 3px 3px 6px #c2c8d4, inset -3px -3px 6px #fff; }
+.bar > i { box-shadow: 2px 0 6px rgba(0,0,0,.15); }
+.hero h1 { color: var(--home); }
+.hero-stats b { color: var(--home); }
+h2::before { width: .9rem; height: .9rem; border-radius: 50%; box-shadow: 2px 2px 4px #c2c8d4, -2px -2px 4px #fff; }
+.instr { background: #e4e9f2; border-left: none; box-shadow: var(--down); }
+.sent { box-shadow: 4px 4px 8px #c2c8d4, -4px -4px 8px #fff; border: none; background: #e4e9f2; }
+.timer, textarea.writing, .prompt { border: none; }
+textarea.writing { box-shadow: var(--down); }
+.prompt { border-left: none; }
+.q label.opt:has(input:checked) { border-color: transparent; background: transparent; box-shadow: var(--down); }
+.score-big { text-shadow: 3px 3px 6px #c2c8d4, -3px -3px 6px #fff; }
+.chip.active { box-shadow: var(--down); background: #e4e9f2; color: var(--accent); }
+.fb { border-left: none; box-shadow: 3px 3px 6px #c2c8d4, -3px -3px 6px #fff; }

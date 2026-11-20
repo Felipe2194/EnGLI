@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;700&display=swap');
+@import url('_base.css');
+/* Y2K: cromado, iridiscente, burbujas brillantes, estrellitas */
+:root {
+  --bg: linear-gradient(135deg, #e0e7ff 0%, #fbcfe8 35%, #cffafe 70%, #fef9c3 100%); --ink: #1e1b4b; --muted: #5b5785; --line: #c7c2ee;
+  --uoe: #a855f7; --reading: #06b6d4; --drills: #f59e0b; --writing: #ec4899; --puntaje: #3b82f6; --progress: #10b981; --home: #a855f7; --listening: #22d3ee; --speaking: #fb923c; --overall: #ec4899;
+  --on-accent: #fff;
+  --font: "Inter", sans-serif; --font-head: "Syne", sans-serif; --head-weight: 800; --h1-size: 2.4rem;
+  --card: linear-gradient(150deg, #ffffff 0%, #eef0f7 40%, #ffffff 55%, #dfe3ee 100%); --card-border: 1px solid #fff;
+  --card-shadow: 0 10px 26px -8px rgba(147, 51, 234, .35), inset 0 1px 0 #fff, inset 0 -2px 6px rgba(99, 102, 241, .12);
+  --card-shadow-hover: 0 16px 34px -8px rgba(236, 72, 153, .45), inset 0 1px 0 #fff; --radius: 26px; --radius-sm: 14px; --strip: 0px;
+  --header-bg: rgba(255,255,255,.55); --header-filter: blur(14px); --header-border: 1px solid #fff; --header-shadow: 0 4px 20px rgba(168,85,247,.2);
+  --nav-active-bg: linear-gradient(180deg, #f0abfc, #a855f7); --nav-active-ink: #fff; --nav-active-shadow: inset 0 2px 3px rgba(255,255,255,.7), 0 4px 10px rgba(168,85,247,.4);
+  --hero-bg: linear-gradient(120deg, #a5f3fc, #c4b5fd 30%, #f9a8d4 60%, #fde68a); --hero-ink: #1e1b4b; --hero-border: 2px solid #fff; --hero-shadow: 0 20px 40px -14px rgba(168,85,247,.55); --hero-radius: 34px;
+  --stat-bg: rgba(255,255,255,.55); --stat-border: 2px solid #fff; --stat-shadow: inset 0 2px 4px #fff, 0 6px 14px rgba(99,102,241,.25);
+  --feature-bg: linear-gradient(160deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c)); --feature-ink: #fff;
+  --btn-bg: linear-gradient(180deg, #ffffff, #e9d5ff); --btn-border: 1px solid #d8b4fe; --btn-radius: 999px;
+  --btn-shadow: inset 0 -3px 6px rgba(147, 51, 234, .2), 0 4px 10px rgba(147, 51, 234, .2); --btn-shadow-hover: inset 0 -3px 6px rgba(147,51,234,.2), 0 8px 18px rgba(236,72,153,.35);
+  --primary-bg: linear-gradient(180deg, #f5d0fe 0%, #c084fc 45%, #9333ea 100%); --primary-ink: #fff; --primary-border: 1px solid #9333ea;
+  --input-bg: rgba(255,255,255,.8); --input-border: 1.5px solid #d8b4fe; --input-radius: 999px; --tag-radius: 999px;
+  --bar-bg: rgba(255,255,255,.7); --bar-h: 10px; --sticker: "✦ Y2K ✦";
+}
+.card.feature { --feature-bg: linear-gradient(160deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c)); }
+body::before { content: "✦"; position: fixed; top: 18%; left: 3%; font-size: 3rem; color: #fff; text-shadow: 0 0 18px #f0abfc; pointer-events: none; }
+body::after { content: "✧"; position: fixed; bottom: 12%; right: 4%; font-size: 4rem; color: #fff; text-shadow: 0 0 22px #67e8f9; pointer-events: none; }
+h1 { background: linear-gradient(90deg, #7e22ce, #db2777, #0891b2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 { background: linear-gradient(90deg, #4c1d95, #be185d); -webkit-background-clip: text; background-clip: text; }
+h2::before { content: "✦"; width: auto; height: auto; background: none; color: var(--accent); font-size: 1.2rem; }
+.card.feature { border: 2px solid rgba(255,255,255,.8); box-shadow: inset 0 2px 6px rgba(255,255,255,.8), 0 12px 26px -10px var(--c); text-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.card.feature::before { content: ""; position: absolute; left: 10%; right: 10%; top: 6px; height: 40%; border-radius: 999px; background: linear-gradient(rgba(255,255,255,.55), transparent); pointer-events: none; }
+.card.feature .tag { text-shadow: none; }
+.hero::after { background: linear-gradient(90deg, #f0abfc, #67e8f9); color: #1e1b4b; border: 2px solid #fff; box-shadow: 0 4px 12px rgba(168,85,247,.4); }
+.score-big { background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bar > i { background: linear-gradient(90deg, #f0abfc, var(--c, var(--accent)), #67e8f9); }
+.gapnum { background: linear-gradient(180deg, #f0abfc, #9333ea); }
+.instr { background: rgba(255,255,255,.6); }
+.sent { background: rgba(255,255,255,.75); }
+.card.feature .tag { background: rgba(255,255,255,.85); }
