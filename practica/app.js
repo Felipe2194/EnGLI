@@ -198,6 +198,8 @@ function route() {
   const [view = '', arg] = location.hash.replace(/^#\/?/, '').split('/');
   const sectionOf = view === 'ex' && exById(arg) ? PARTS[exById(arg).part].section : view;
   document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (sectionOf || 'home')));
+  document.body.dataset.view = sectionOf || 'home';
+  $app.style.animation = 'none'; void $app.offsetWidth; $app.style.animation = '';
   const views = { '': home, uoe: () => section('uoe'), reading: () => section('reading'), ex: () => exercise(arg),
      drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress, puntaje: calculator };
   (views[view] || home)();
@@ -224,23 +226,37 @@ function home() {
   const critAvg = crit.map(c => [c, recent.length ? avg(recent.map(w => w[c])) : null]);
   const weakest = critAvg.filter(([, v]) => v != null).sort((a, b) => a[1] - b[1])[0];
 
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const days = Math.max(0, Math.round((EXAM_DATE - today) / 86400000));
+  const est = estimate().scores;
+  const done = state.attempts.length;
   $app.innerHTML = `
-    <h1>Preparación B2 First</h1>
-    <p class="muted">Foco en tus puntos débiles: <b>Use of English</b> y <b>Writing</b>.</p>
+    <section class="hero">
+      <div style="position:relative;z-index:1">
+        <div class="kicker">Cambridge B2 First · 12 de diciembre</div>
+        <h1>¡A romperla en el B2! 🚀</h1>
+        <p>Foco en tus puntos débiles: <b>Use of English</b> y <b>Writing</b>.</p>
+      </div>
+      <div class="hero-stats">
+        <div><b>${days}</b><span>días para el examen</span></div>
+        <div><b>${est.overall}</b><span>estimación global</span></div>
+        <div><b>${done}</b><span>ejercicios hechos</span></div>
+      </div>
+    </section>
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
-      <a class="card" href="#/ex/${rec.id}">
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      <a class="card feature" data-sec="${PARTS[rec.part].section}" href="#/ex/${rec.id}">
         <span class="tag">Siguiente recomendado</span>
         <h3 style="margin-top:.3rem">${esc(PARTS[rec.part].label)} · ${esc(PARTS[rec.part].name)}</h3>
         <div>${esc(rec.title)} ${badge(bestFor(rec.id))}</div>
         <div class="small muted" style="margin-top:.4rem">${SECTIONS[PARTS[rec.part].section].name} · ~${PARTS[rec.part].minutes} min</div>
       </a>
-      <a class="card" href="#/drills/${drillErrors ? 'errores' : ''}">
+      <a class="card feature" data-sec="drills" href="#/drills/${drillErrors ? 'errores' : ''}">
         <span class="tag">Gramática rápida</span>
         <h3 style="margin-top:.3rem">${drillErrors ? `Repasar mis errores (${drillErrors})` : 'Ronda de 10 preguntas'}</h3>
         <div class="small muted">Modals, conditionals, wish, passive, causative, relatives, phrasal verbs, prepositions…</div>
       </a>
-      <a class="card" href="#/writing">
+      <a class="card feature" data-sec="writing" href="#/writing">
         <span class="tag">Writing</span>
         <h3 style="margin-top:.3rem">${wlog.length ? `Último: ${wTotals[wTotals.length - 1]}/20` : 'Sin correcciones aún'}</h3>
         <div class="small muted">${weakest ? `Criterio más flojo (últimos ${recent.length}): <b>${critNames[weakest[0]]}</b> (${weakest[1].toFixed(1)}/5)` : ''}</div>
@@ -252,7 +268,7 @@ function home() {
     <div class="grid">
       ${PRIORITY.slice().sort().map(part => {
         const st = partStats(part);
-        return `<a class="card" href="#/${PARTS[part].section}">
+        return `<a class="card" data-sec="${PARTS[part].section}" href="#/${PARTS[part].section}">
           <span class="tag">${SECTIONS[PARTS[part].section].name} · ${PARTS[part].label}</span>
           <div style="display:flex;justify-content:space-between;align-items:baseline">
             <span>${PARTS[part].name}</span><span class="stat">${st ? st.avg + '%' : '—'}</span></div>
@@ -283,10 +299,10 @@ function estimateBlock() {
   return `
     <h2>Estimación en escala Cambridge <a class="small" href="#/puntaje" style="font-weight:400">· calculadora</a></h2>
     <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
-      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card"><span class="tag">${P.name}</span>
+      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card" data-sec="${k}"><span class="tag">${P.name}</span>
         <div class="stat">${scores[k].scale}</div>${scaleBadge(scores[k].scale)}
         <div class="small muted" style="margin-top:.3rem">${scores[k].raw}/${P.max} marks · ${source[k] ? `según tu ${source[k]}` : esc(mock.label)}</div></div>`).join('')}
-      <div class="card" style="border-color:var(--accent)"><span class="tag">Global</span>
+      <div class="card highlight" data-sec="overall"><span class="tag">Global</span>
         <div class="stat">${scores.overall}</div><span class="badge ${ov.cls}">${ov.cefr} · Grade ${ov.grade}</span>
         <div class="small muted" style="margin-top:.3rem">Promedio de las 5 partes</div></div>
     </div>
@@ -302,13 +318,13 @@ function calculator() {
     <h1>Calculadora de puntaje</h1>
     <p class="muted">Igual que <a href="https://cambridgescore.com/fce" target="_blank" rel="noopener">cambridgescore.com/fce</a>: cargá las respuestas correctas de un simulacro y te da la Cambridge Scale. Guardalo para que la estimación de Inicio use tu Listening y tu Speaking más recientes.</p>
     <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
-      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card">
+      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card" data-sec="${k}">
         <h3>${P.name}</h3>
         ${P.fields.map(([f, label, max]) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:.3rem 0">
           <label class="small" for="f-${f}">${label}</label>
           <input class="gap" style="min-width:0;width:4.5rem" type="number" inputmode="decimal" id="f-${f}" data-f="${f}" min="0" max="${max}" step="${P.step || 1}" value="${cur[f] ?? 0}"></div>`).join('')}
         <div style="margin-top:.6rem" data-out="${k}"></div></div>`).join('')}
-      <div class="card" style="border-color:var(--accent)"><h3>Resultado global</h3><div data-out="overall"></div>
+      <div class="card highlight" data-sec="overall"><h3>Resultado global</h3><div data-out="overall"></div>
         <div class="actions">
           <input class="gap" style="min-width:0" type="date" id="mdate" value="${today}">
           <input class="gap" style="min-width:0;flex:1" id="mlabel" placeholder="Nombre (ej: Mockup 2)">
@@ -367,7 +383,7 @@ function section(key) {
       const P = PARTS[part], st = partStats(part);
       const exs = FCE.exercises.filter(e => e.part === part);
       return `<h2>${P.label} · ${P.name} <span class="small muted">— ~${P.minutes} min ${st ? `· promedio ${st.avg}%` : ''}</span></h2>
-        <div class="grid">${exs.map(e => `<a class="card" href="#/ex/${e.id}">
+        <div class="grid">${exs.map(e => `<a class="card" data-sec="${key}" href="#/ex/${e.id}">
           <span class="tag">${P.label}</span><h3 style="margin-top:.2rem">${esc(e.title)}</h3>${badge(bestFor(e.id))}</a>`).join('')}
         </div>`;
     }).join('')}
@@ -560,7 +576,7 @@ function drills(topic = '') {
     </div>
     ${drillSession.length ? `<div class="card">${drillSession.map((d, i) => `
       <div class="q"><span class="gapnum">${i + 1}</span>
-        <span class="tag" style="margin-right:.4rem">${esc(T[d.topic])}</span><br>
+        <span class="tag" style="margin-right:.4rem;color:var(--drills)">${esc(T[d.topic])}</span><br>
         ${esc(d.q).replace('___', `<input class="gap" data-i="${i}" autocomplete="off" spellcheck="false">`)}
         ${d.hint ? `<span class="muted small">(${esc(d.hint)})</span>` : ''}
       </div>`).join('')}</div>
@@ -626,7 +642,7 @@ function writingList() {
   const card = w => {
     const d = state.drafts[w.id]; const n = d?.text ? countWords(d.text) : 0;
     const done = (FCE.writingLog || []).filter(l => l.taskId === w.id);
-    return `<a class="card" href="#/writing/${w.id}"><span class="tag">Part ${w.part} · ${W_TYPES[w.type]}</span>
+    return `<a class="card" data-sec="writing" href="#/writing/${w.id}"><span class="tag">Part ${w.part} · ${W_TYPES[w.type]}</span>
       <h3 style="margin-top:.2rem">${esc(w.title)}</h3>
       ${done.length ? `<span class="badge ok">corregido: ${done.map(l => l.content + l.communicative + l.organisation + l.language).join(', ')}/20</span> ` : ''}
       ${n ? `<span class="badge warn">borrador: ${n} palabras</span>` : ''}</a>`;
