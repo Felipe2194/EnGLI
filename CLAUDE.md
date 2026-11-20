@@ -19,6 +19,12 @@ Responder en **español**; los ejercicios y las correcciones van en inglés.
 - Gramática vista en clase: modals of deduction, third y mixed conditionals, wish/hope/if only, passive (incluida la de reporte: "is believed to have…"), causative have/get, relative clauses, cleft sentences, able to, phrasal verbs, word formation.
 - Errores recurrentes: ver `writing/errores-frecuentes.md`.
 
+## Puntaje: referencia oficial del curso = https://cambridgescore.com/fce
+Implementado en `practica/app.js` (`PAPERS`, `toScale`, `gradeOf`) y verificado contra su mockup: 177/170/180/168/173 → 174.
+- Marks por ítem: Reading P1 (el multiple-choice cloze de UoE **suma a Reading**) = 1, P5 y P6 = 2, P7 = 1 (/42). UoE P2 y P3 = 1, P4 = 2 o 1 si es parcial (/28). Listening = 1 (/30). Writing = suma de los 8 criterios (/40). Speaking = suma de los 5 criterios × 2.4 (/60).
+- La escala sale por interpolación lineal. Anclas para 160 / 180: Reading 24/37 · UoE 18/24 · Listening 18/27 · Writing 24/34 · Speaking 36/54. Máximo = 190.
+- Grados: 180+ A (C1) · 173–179 B · 160–172 C (B2) · 140–159 Level B1. El global es el promedio de las 5 partes, redondeado.
+
 ## Agregar ejercicios
 Cuando Felipe pida ejercicios nuevos, escribilos **originales** (no copiar los textos de los libros de `FCE/`), al nivel y con el formato real del B2 First, y agregalos al archivo `data/*.js` que corresponda con `FCE.exercises.push({...})`. Usá template literals (backticks). Los `id` tienen que ser únicos (`uoe2-05`, `rd6-02`, …). Los huecos se marcan en el texto como `[1]`, `[2]`, …
 

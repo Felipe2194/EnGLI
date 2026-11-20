@@ -27,14 +27,79 @@ const SECTIONS = {
 };
 // Prioridad cuando se recomienda qué practicar (puntos débiles primero)
 const PRIORITY = ['uoe4', 'uoe2', 'uoe3', 'uoe1', 'rd6', 'rd5', 'rd7'];
-const MOCK = [
-  ['Reading', 177], ['Use of English', 170], ['Listening', 180], ['Writing', 168], ['Speaking', 173], ['Global', 174],
-];
 const LETTERS = 'ABCDEFG';
+
+// ════════════════════════════ Puntaje Cambridge ════════════════════════════
+// Mismo cálculo que https://cambridgescore.com/fce. Verificado con el mockup del 18/11/2026:
+// reproduce exactamente 177 / 170 / 180 / 168 / 173 → global 174 y los practice scores 35 / 21 / 27 / 28 / 48.
+// Marks: Reading P1 y P7 = 1 por ítem, P5 y P6 = 2 · UoE P2 y P3 = 1, P4 = 2 (parcial = 1) · Listening = 1
+// Writing = suma de los 8 criterios (/40) · Speaking = suma de los 5 criterios × 2.4 (/60).
+// Escala: interpolación lineal entre anclas (160 y 180 confirmadas con tu mockup; 140 y el extremo inferior son aproximados).
+// OJO: Use of English Part 1 (multiple-choice cloze) suma al puntaje de READING, como en el examen real.
+const PAPERS = {
+  reading: { name: 'Reading', max: 42, pts: [[0, 122], [16, 140], [24, 160], [37, 180], [42, 190]],
+    fields: [['r1', 'Part 1 (correct answers)', 8, 1], ['r5', 'Part 5 (correct answers)', 6, 2], ['r6', 'Part 6 (correct answers)', 6, 2], ['r7', 'Part 7 (correct answers)', 10, 1]] },
+  uoe: { name: 'Use of English', max: 28, pts: [[0, 122], [11, 140], [18, 160], [24, 180], [28, 190]],
+    fields: [['u2', 'Part 2 (correct answers)', 8, 1], ['u3', 'Part 3 (correct answers)', 8, 1], ['u4', 'Part 4 (correct answers)', 6, 2], ['u4p', 'Part 4 (partly correct answers)', 6, 1]] },
+  listening: { name: 'Listening', max: 30, pts: [[0, 122], [12, 140], [18, 160], [27, 180], [30, 190]],
+    fields: [['l1', 'Part 1 (correct answers)', 8, 1], ['l2', 'Part 2 (correct answers)', 10, 1], ['l3', 'Part 3 (correct answers)', 5, 1], ['l4', 'Part 4 (correct answers)', 7, 1]] },
+  writing: { name: 'Writing', max: 40, pts: [[0, 122], [16, 140], [24, 160], [34, 180], [40, 190]],
+    fields: [['w1c', 'Part 1 · Content', 5, 1], ['w1a', 'Part 1 · Com. Achievement', 5, 1], ['w1o', 'Part 1 · Organisation', 5, 1], ['w1l', 'Part 1 · Language', 5, 1],
+             ['w2c', 'Part 2 · Content', 5, 1], ['w2a', 'Part 2 · Com. Achievement', 5, 1], ['w2o', 'Part 2 · Organisation', 5, 1], ['w2l', 'Part 2 · Language', 5, 1]] },
+  speaking: { name: 'Speaking', max: 60, pts: [[0, 122], [24, 140], [36, 160], [54, 180], [60, 190]], step: 0.5,
+    fields: [['gv', 'Grammar and Vocabulary', 5, 2.4], ['dm', 'Discourse Management', 5, 2.4], ['pr', 'Pronunciation', 5, 2.4], ['ic', 'Interactive Communication', 5, 2.4], ['ga', 'Global Achievement', 5, 2.4]] },
+};
+const BASE_MOCK = { date: '2026-11-18', label: 'Último mockup (clase)', vals: {
+  r1: 7, r5: 6, r6: 4, r7: 8, u2: 7, u3: 6, u4: 4, u4p: 0, l1: 8, l2: 8, l3: 5, l4: 6,
+  w1c: 4, w1a: 4, w1o: 2, w1l: 3, w2c: 3, w2a: 4, w2o: 5, w2l: 3, gv: 3.5, dm: 4, pr: 3.5, ic: 5, ga: 4 } };
+// Qué campo de la calculadora alimenta cada parte practicada en la web (y cuántos ítems tiene en el examen).
+const PART_FIELD = { uoe1: ['r1', 8], uoe2: ['u2', 8], uoe3: ['u3', 8], uoe4: ['u4', 6], rd5: ['r5', 6], rd6: ['r6', 6], rd7: ['r7', 10] };
+const PART_MARK = { uoe1: 1, uoe2: 1, uoe3: 1, uoe4: 2, rd5: 2, rd6: 2, rd7: 1 };
+
+function rawOf(paper, vals) {
+  return Math.round(PAPERS[paper].fields.reduce((s, [k, , , w]) => s + (+vals[k] || 0) * w, 0) * 10) / 10;
+}
+function toScale(paper, raw) {
+  const p = PAPERS[paper].pts;
+  raw = Math.max(0, Math.min(raw, p[p.length - 1][0]));
+  for (let i = 1; i < p.length; i++) if (raw <= p[i][0]) {
+    const [a, b] = p[i - 1], [c, d] = p[i];
+    return Math.round(b + (raw - a) * (d - b) / (c - a));
+  }
+}
+function gradeOf(s) {
+  return s >= 180 ? { cefr: 'C1', grade: 'A', cls: 'ok' } : s >= 173 ? { cefr: 'B2', grade: 'B', cls: 'ok' }
+    : s >= 160 ? { cefr: 'B2', grade: 'C', cls: 'warn' } : s >= 140 ? { cefr: 'B1', grade: 'Level B1', cls: 'bad' } : { cefr: '—', grade: 'Fail', cls: 'bad' };
+}
+function scoreAll(vals) {
+  const out = {};
+  Object.keys(PAPERS).forEach(k => { const raw = rawOf(k, vals); out[k] = { raw, scale: toScale(k, raw) }; });
+  out.overall = Math.round(avg(Object.keys(PAPERS).map(k => out[k].scale)));
+  return out;
+}
+function latestMock() { return (state.mocks && state.mocks.length) ? state.mocks[state.mocks.length - 1] : BASE_MOCK; }
+// Estimación: Reading y UoE con tus últimos 3 intentos de cada parte; Writing con tus últimas correcciones; Listening y Speaking del último simulacro.
+function estimate() {
+  const mock = latestMock(), vals = { ...mock.vals }, source = {};
+  Object.entries(PART_FIELD).forEach(([part, [field, items]]) => {
+    const at = state.attempts.filter(a => a.part === part).slice(-3);
+    if (!at.length) return;
+    vals[field] = Math.round(items * avg(at.map(a => a.score / a.max)) * 10) / 10;
+    if (part === 'uoe4') vals.u4p = 0;
+    source[PARTS[part].section === 'uoe' && part !== 'uoe1' ? 'uoe' : 'reading'] = 'práctica';
+  });
+  const wlog = FCE.writingLog || [];
+  const p1 = [...wlog].reverse().find(w => w.type === 'essay'), p2 = [...wlog].reverse().find(w => w.type !== 'essay');
+  if (p1) Object.assign(vals, { w1c: p1.content, w1a: p1.communicative, w1o: p1.organisation, w1l: p1.language });
+  if (p2) Object.assign(vals, { w2c: p2.content, w2a: p2.communicative, w2o: p2.organisation, w2l: p2.language });
+  if (p1 || p2) source.writing = 'correcciones';
+  return { scores: scoreAll(vals), source, mock };
+}
+function scaleBadge(s) { const g = gradeOf(s); return `<span class="badge ${g.cls}">${s} · ${g.grade}</span>`; }
 
 // ════════════════════════════ Estado ════════════════════════════
 const KEY = 'fce-practica-v1';
-const blank = () => ({ attempts: [], errors: {}, drafts: {} });
+const blank = () => ({ attempts: [], errors: {}, drafts: {}, mocks: [] });
 let state = load();
 function load() {
   try { return Object.assign(blank(), JSON.parse(localStorage.getItem(KEY)) || {}); }
@@ -50,7 +115,8 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const exById = id => FCE.exercises.find(e => e.id === id);
 const avg = a => a.reduce((x, y) => x + y, 0) / (a.length || 1);
 const pct = a => a.max ? Math.round(100 * a.score / a.max) : 0;
-const level = p => p >= 75 ? 'ok' : p >= 60 ? 'warn' : 'bad';
+// Colores por %: ~64% de los marks ≈ 160 (aprobar B2) y ~86% ≈ 180 (Grade A / C1) en Reading y Use of English.
+const level = p => p >= 86 ? 'ok' : p >= 64 ? 'warn' : 'bad';
 const fmtTime = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 const fmtDate = iso => new Date(iso).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -133,7 +199,7 @@ function route() {
   const sectionOf = view === 'ex' && exById(arg) ? PARTS[exById(arg).part].section : view;
   document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (sectionOf || 'home')));
   const views = { '': home, uoe: () => section('uoe'), reading: () => section('reading'), ex: () => exercise(arg),
-     drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress };
+     drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress, puntaje: calculator };
   (views[view] || home)();
   window.scrollTo(0, 0);
 }
@@ -195,14 +261,9 @@ function home() {
         </a>`;
       }).join('')}
     </div>
-    <p class="small muted">Referencia: aprobar B2 ≈ 60% · Grade A / C1 ≈ 80%.</p>
+    <p class="small muted">Referencia en Reading y Use of English: ≈ 64% de los marks → 160 (aprobás B2) · ≈ 86% → 180 (Grade A / C1).</p>
 
-    <h2>Último mockup (punto de partida)</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
-      ${MOCK.map(([n, s]) => `<div class="card"><span class="tag">${n}</span>
-        <div class="stat">${s}</div>
-        <span class="badge ${s >= 180 ? 'ok' : s >= 173 ? 'warn' : 'bad'}">${s >= 180 ? 'C1 · A' : s >= 173 ? 'B2 · B' : 'B2 · C'}</span></div>`).join('')}
-    </div>
+    ${estimateBlock()}
 
     <h2>Plan diario sugerido (≈ 60–75 min)</h2>
     <div class="card">
@@ -216,12 +277,92 @@ function home() {
     </div>`;
 }
 
+function estimateBlock() {
+  const { scores, source, mock } = estimate();
+  const ov = gradeOf(scores.overall);
+  return `
+    <h2>Estimación en escala Cambridge <a class="small" href="#/puntaje" style="font-weight:400">· calculadora</a></h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card"><span class="tag">${P.name}</span>
+        <div class="stat">${scores[k].scale}</div>${scaleBadge(scores[k].scale)}
+        <div class="small muted" style="margin-top:.3rem">${scores[k].raw}/${P.max} marks · ${source[k] ? `según tu ${source[k]}` : esc(mock.label)}</div></div>`).join('')}
+      <div class="card" style="border-color:var(--accent)"><span class="tag">Global</span>
+        <div class="stat">${scores.overall}</div><span class="badge ${ov.cls}">${ov.cefr} · Grade ${ov.grade}</span>
+        <div class="small muted" style="margin-top:.3rem">Promedio de las 5 partes</div></div>
+    </div>
+    <p class="small muted">Mismo cálculo que cambridgescore.com/fce. Reading y Use of English salen de tus últimos 3 intentos de cada parte (si todavía no practicaste una parte, se toma la del simulacro).
+      Writing sale de tu último essay + tu último texto de Part 2. Listening y Speaking, de "${esc(mock.label)}" (${esc(mock.date)}).</p>`;
+}
+
+// ════════════════════════════ Calculadora (como cambridgescore.com/fce) ════════════════════════════
+function calculator() {
+  const cur = { ...latestMock().vals };
+  const today = new Date().toISOString().slice(0, 10);
+  $app.innerHTML = `
+    <h1>Calculadora de puntaje</h1>
+    <p class="muted">Igual que <a href="https://cambridgescore.com/fce" target="_blank" rel="noopener">cambridgescore.com/fce</a>: cargá las respuestas correctas de un simulacro y te da la Cambridge Scale. Guardalo para que la estimación de Inicio use tu Listening y tu Speaking más recientes.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
+      ${Object.entries(PAPERS).map(([k, P]) => `<div class="card">
+        <h3>${P.name}</h3>
+        ${P.fields.map(([f, label, max]) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:.3rem 0">
+          <label class="small" for="f-${f}">${label}</label>
+          <input class="gap" style="min-width:0;width:4.5rem" type="number" inputmode="decimal" id="f-${f}" data-f="${f}" min="0" max="${max}" step="${P.step || 1}" value="${cur[f] ?? 0}"></div>`).join('')}
+        <div style="margin-top:.6rem" data-out="${k}"></div></div>`).join('')}
+      <div class="card" style="border-color:var(--accent)"><h3>Resultado global</h3><div data-out="overall"></div>
+        <div class="actions">
+          <input class="gap" style="min-width:0" type="date" id="mdate" value="${today}">
+          <input class="gap" style="min-width:0;flex:1" id="mlabel" placeholder="Nombre (ej: Mockup 2)">
+          <button class="primary" id="msave">Guardar simulacro</button>
+        </div>
+        <p class="small muted">Si en Use of English Part 4 hay respuestas parcialmente correctas, valen 1 mark (las correctas, 2). Correctas + parciales ≤ 6.</p></div>
+    </div>
+    <h2>Simulacros guardados</h2>
+    <div class="card"><table><tr><th>Fecha</th><th>Nombre</th>${Object.values(PAPERS).map(P => `<th class="num">${P.name}</th>`).join('')}<th class="num">Global</th><th></th></tr>
+      ${[BASE_MOCK, ...(state.mocks || [])].map((m, i) => { const s = scoreAll(m.vals);
+        return `<tr><td>${esc(m.date)}</td><td>${esc(m.label)}</td>${Object.keys(PAPERS).map(k => `<td class="num">${s[k].scale}</td>`).join('')}
+          <td class="num">${scaleBadge(s.overall)}</td><td>${i ? `<button class="link" data-load="${i - 1}">cargar</button> · <button class="link" data-delm="${i - 1}">borrar</button>` : '<button class="link" data-load="base">cargar</button>'}</td></tr>`; }).join('')}
+    </table></div>`;
+
+  const read = () => Object.fromEntries($$('[data-f]').map(i => [i.dataset.f, Math.max(0, Math.min(+i.max, +i.value || 0))]));
+  const refresh = () => {
+    const v = read();
+    const over = v.u4 + v.u4p > 6;
+    const s = scoreAll(v);
+    Object.keys(PAPERS).forEach(k => {
+      const g = gradeOf(s[k].scale);
+      $(`[data-out="${k}"]`).innerHTML = `<div class="small">Practice Test Score: <b>${s[k].raw}</b>/${PAPERS[k].max}</div>
+        <div>Cambridge Scale Score: <span class="stat" style="font-size:1.3rem">${s[k].scale}</span></div>
+        <div class="small">CEFR ${g.cefr} · <span class="badge ${g.cls}">Grade ${g.grade}</span></div>
+        ${k === 'uoe' && over ? '<div class="warnline">Part 4: correctas + parciales no puede pasar de 6.</div>' : ''}`;
+    });
+    const g = gradeOf(s.overall);
+    $('[data-out="overall"]').innerHTML = `<div class="score-big">${s.overall}</div><span class="badge ${g.cls}">CEFR ${g.cefr} · Grade ${g.grade}</span>
+      <div class="small muted" style="margin-top:.4rem">180–190 = A (C1) · 173–179 = B · 160–172 = C (B2) · 140–159 = Level B1</div>`;
+  };
+  $$('[data-f]').forEach(i => i.addEventListener('input', refresh));
+  refresh();
+  $('#msave').onclick = () => {
+    state.mocks = state.mocks || [];
+    state.mocks.push({ date: $('#mdate').value || today, label: $('#mlabel').value.trim() || `Simulacro ${state.mocks.length + 2}`, vals: read() });
+    save(); toast('Simulacro guardado.'); calculator();
+  };
+  $$('[data-load]').forEach(b => b.onclick = () => {
+    const m = b.dataset.load === 'base' ? BASE_MOCK : state.mocks[+b.dataset.load];
+    $$('[data-f]').forEach(i => { i.value = m.vals[i.dataset.f] ?? 0; }); refresh(); window.scrollTo(0, 0);
+  });
+  $$('[data-delm]').forEach(b => b.onclick = () => { if (confirm('¿Borrar este simulacro?')) { state.mocks.splice(+b.dataset.delm, 1); save(); calculator(); } });
+}
+
 // ════════════════════════════ Sección (UoE / Reading) ════════════════════════════
 function section(key) {
   const S = SECTIONS[key];
+  const est = estimate();
+  const paper = key === 'uoe' ? 'uoe' : 'reading';
   $app.innerHTML = `
     <h1>${S.name}</h1>
     <p class="muted">${S.note}</p>
+    <div class="instr">Estimación actual de ${PAPERS[paper].name}: ${scaleBadge(est.scores[paper].scale)} (${est.scores[paper].raw}/${PAPERS[paper].max} marks).
+      ${key === 'uoe' ? '<br>En el puntaje oficial, <b>Part 1 suma a Reading</b>: Use of English se calcula sólo con Parts 2, 3 y 4. En Part 4 cada ítem vale 2 marks.' : '<br>Reading = Part 1 de Use of English (1 mark por ítem) + Part 5 y Part 6 (2 marks por ítem) + Part 7 (1 mark).'}</div>
     ${S.parts.map(part => {
       const P = PARTS[part], st = partStats(part);
       const exs = FCE.exercises.filter(e => e.part === part);
@@ -377,6 +518,8 @@ function renderResult(ex, res, attempt) {
       <div style="display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap">
         <span class="score-big">${attempt.score}/${attempt.max}</span> <span class="badge ${level(p)}">${p}%</span>
         <span class="muted small">Tiempo: ${fmtTime(attempt.secs)} (sugerido ${P.minutes}:00)</span></div>
+      <div class="small muted">En el examen: <b>${attempt.score * PART_MARK[ex.part]}/${attempt.max * PART_MARK[ex.part]} marks</b> (${PART_MARK[ex.part]} por ítem) que suman a
+        <b>${ex.part === 'uoe1' || P.section === 'reading' ? 'Reading' : 'Use of English'}</b>. <a href="#/">Ver estimación</a></div>
       ${ex.part === 'uoe4' ? '<p class="small muted">En el examen real Part 4 vale 2 puntos por ítem (se puede sacar 1 de 2). Si tu respuesta es otra forma correcta, marcala como válida.</p>' : ''}
       <div style="margin-top:.8rem">${res.map((r, i) => `
         <div class="fb ${r.ok ? 'ok' : 'bad'}"><b>${i + 1}.</b> ${r.ok ? '✔' : '✘'}
@@ -496,8 +639,8 @@ function writingList() {
     ${wlog.length ? `<h2>Historial de puntajes</h2><div class="card"><table><tr><th>Fecha</th><th>Tarea</th><th class="num">Content</th><th class="num">Com. Ach.</th><th class="num">Organis.</th><th class="num">Language</th><th class="num">Total</th></tr>
       ${wlog.slice().reverse().map(l => { const t = l.content + l.communicative + l.organisation + l.language;
         return `<tr><td>${esc(l.date)}</td><td>${esc(l.task)} <span class="muted small">${esc(l.source || '')}</span></td><td class="num">${l.content}</td><td class="num">${l.communicative}</td><td class="num">${l.organisation}</td><td class="num">${l.language}</td>
-        <td class="num"><span class="badge ${level(t * 5)}">${t}/20</span></td></tr>`; }).join('')}</table>
-      <p class="small muted">Aprobar ≈ 12/20 por texto · Grade A / C1 ≈ 16/20.</p></div>` : ''}
+        <td class="num">${t}/20 ${scaleBadge(toScale('writing', t * 2))}</td></tr>`; }).join('')}</table>
+      <p class="small muted">La escala de cada fila supone que el otro texto del examen saca lo mismo (writing = Part 1 + Part 2, /40). 12/20 → 160 (aprobás B2) · 15/20 → 172 · 17/20 → 180 (Grade A / C1).</p></div>` : ''}
     <h2>Part 1 · Essay</h2><div class="grid">${FCE.writing.filter(w => w.part === 1).map(card).join('')}</div>
     <h2>Part 2 · Elegí uno</h2><div class="grid">${FCE.writing.filter(w => w.part === 2).map(card).join('')}</div>`;
 }

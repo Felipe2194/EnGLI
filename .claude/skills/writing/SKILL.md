@@ -41,7 +41,15 @@ Guardá el texto en un archivo temporal y contá con `node -e` o `wc -w`; no lo 
 - **Language**: rango de vocabulario (incluido el menos común), estructuras simples y complejas, y control. Los errores que no impiden entender penalizan menos.
   5 = buen rango, con errores ocasionales que no molestan · 3 = vocabulario cotidiano y estructuras simples con buen control · 1 = vocabulario básico y errores que dificultan entender.
 
-Mostrá los 4 puntajes con una línea de justificación cada uno, más el total /20. Equivalencia aproximada por texto: **12/20 ≈ aprobar B2 (160)**, 14–15 ≈ 170 (Grade B), **16+ ≈ C1 (180)**. Calibrá con honestidad usando sus puntajes previos en `writing-log.js`.
+Mostrá los 4 puntajes con una línea de justificación cada uno, más el total /20.
+
+Después dá la **Cambridge Scale** con el mismo cálculo que https://cambridgescore.com/fce, que es la referencia que usan en su curso. Ese cálculo está implementado en `practica/app.js` (`PAPERS.writing`) y reproduce exacto sus resultados de mockup.
+- El Writing raw es Part 1 + Part 2, sobre 40 (la suma de los 8 criterios).
+- La escala sale por interpolación lineal entre 24 → 160, 34 → 180 y 40 → 190. Por debajo de 24: 16 → 140.
+- Para un texto solo, suponé que el otro saca lo mismo (raw = total × 2): **12/20 → 160 (Grade C, aprueba B2)** · 15/20 → 172 · 16/20 → 176 (Grade B) · **17/20 → 180 (Grade A / C1)**.
+- Si el último texto de la otra parte está en `writing-log.js`, mostrá también la estimación combinada: el último essay + el último texto de Part 2.
+
+Calibrá los puntajes con honestidad usando sus notas previas en `writing-log.js`.
 
 ### 4. Reglas de su profesor (penalizá si no las cumple)
 - **Essay**: título siempre. Intro que presenta el tema **sin dar la opinión** + 3 párrafos (las 2 notas + una idea propia) + conclusión con su opinión. Que no falte ningún párrafo: en el mockup le marcaron "THERE IS A PARAGRAPH LACKING". Registro formal: sin contracciones, phrasal verbs informales ni idioms.
