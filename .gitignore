@@ -10,3 +10,5 @@ practica/backup/
 FCE/Writing B2 First (FCE) Guía complet.txt
 FCE/Passive Voice.jpeg
 .env*
+# Exam Booster (Cambridge, copyright): ejercicios transcriptos sólo para uso local
+practica/data/booster.js

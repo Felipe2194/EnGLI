@@ -9,6 +9,8 @@ Responder en **español**; los ejercicios y las correcciones van en inglés.
 - `practica/`: web local de práctica. Se abre `practica/index.html` con doble clic: no necesita servidor ni dependencias.
   - `data/uoe.js`: Use of English Parts 1–4 · `data/reading.js`: Reading Parts 5–7 · `data/drills.js`: drills de gramática.
   - `data/writing.js`: banco de tareas de writing · `data/writing-log.js`: puntajes de writing (lo actualiza `/writing`).
+  - `data/phrasal.js`: drills de phrasal verbs (frases originales sobre la lista de engxam, topics `pv*`).
+  - `data/booster.js`: los 21 exam tasks de Reading & UoE y 8 tareas de writing del **Exam Booster** (Cambridge), con las respuestas de su key. Tiene copyright: está en `.gitignore`, existe **sólo en local** y la app funciona sin él (en Vercel no aparece). Ids `eb-*`, campo `source`. Las tareas de writing `eb-w*` también valen para `/writing` cuando se trabaja en local.
   - El progreso de los ejercicios se guarda en el `localStorage` del navegador (se puede exportar desde la pestaña Progreso).
 - `writing/`: `historial/` (una corrección por archivo) y `errores-frecuentes.md`.
 - `.claude/skills/writing/`: el comando `/writing` (propone tareas y corrige con los criterios de Cambridge).

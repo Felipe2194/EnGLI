@@ -384,7 +384,7 @@ function section(key) {
       const exs = FCE.exercises.filter(e => e.part === part);
       return `<h2>${P.label} · ${P.name} <span class="small muted">— ~${P.minutes} min ${st ? `· promedio ${st.avg}%` : ''}</span></h2>
         <div class="grid">${exs.map(e => `<a class="card" data-sec="${key}" href="#/ex/${e.id}">
-          <span class="tag">${P.label}</span><h3 style="margin-top:.2rem">${esc(e.title)}</h3>${badge(bestFor(e.id))}</a>`).join('')}
+          <span class="tag">${P.label}</span>${e.source ? ` <span class="tag">${esc(e.source)}</span>` : ''}<h3 style="margin-top:.2rem">${esc(e.title)}</h3>${badge(bestFor(e.id))}</a>`).join('')}
         </div>`;
     }).join('')}
     <p class="small muted" style="margin-top:2rem">¿Querés más ejercicios? Pedile a Claude Code: <i>"generá 3 ejercicios nuevos de Part 4 sobre passive y conditionals"</i>.</p>`;
@@ -432,7 +432,7 @@ function exercise(id) {
   } else if (ex.part === 'rd7') {
     const keys = Object.keys(ex.sections);
     body = `<div class="split">
-      <div class="card"><h3>Which person…</h3>${ex.questions.map((q, i) => `<div class="q" style="display:flex;gap:.6rem;align-items:center">
+      <div class="card"><h3>${esc(ex.ask || 'Which person…')}</h3>${ex.questions.map((q, i) => `<div class="q" style="display:flex;gap:.6rem;align-items:center">
         <select class="gap" data-i="${i}" style="min-width:4rem"><option value="">—</option>${keys.map(k => `<option>${k}</option>`).join('')}</select>
         <span><b>${i + 1}.</b> ${esc(q.q)}</span></div>`).join('')}</div>
       <div class="card sticky">${keys.map(k => `<div class="q"><h3>${k} · ${esc(ex.sections[k].title)}</h3><div class="small">${esc(ex.sections[k].text)}</div></div>`).join('')}</div></div>`;
@@ -642,7 +642,7 @@ function writingList() {
   const card = w => {
     const d = state.drafts[w.id]; const n = d?.text ? countWords(d.text) : 0;
     const done = (FCE.writingLog || []).filter(l => l.taskId === w.id);
-    return `<a class="card" data-sec="writing" href="#/writing/${w.id}"><span class="tag">Part ${w.part} · ${W_TYPES[w.type]}</span>
+    return `<a class="card" data-sec="writing" href="#/writing/${w.id}"><span class="tag">Part ${w.part} · ${W_TYPES[w.type]}</span>${w.source ? ` <span class="tag">${esc(w.source)}</span>` : ''}
       <h3 style="margin-top:.2rem">${esc(w.title)}</h3>
       ${done.length ? `<span class="badge ok">corregido: ${done.map(l => l.content + l.communicative + l.organisation + l.language).join(', ')}/20</span> ` : ''}
       ${n ? `<span class="badge warn">borrador: ${n} palabras</span>` : ''}</a>`;
