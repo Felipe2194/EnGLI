@@ -576,7 +576,7 @@ function drills(topic = '') {
     </div>
     ${drillSession.length ? `<div class="card">${drillSession.map((d, i) => `
       <div class="q"><span class="gapnum">${i + 1}</span>
-        <span class="tag" style="margin-right:.4rem;color:var(--drills)">${esc(T[d.topic])}</span><br>
+        <span class="tag" style="margin-right:.4rem">${esc(T[d.topic])}</span><br>
         ${esc(d.q).replace('___', `<input class="gap" data-i="${i}" autocomplete="off" spellcheck="false">`)}
         ${d.hint ? `<span class="muted small">(${esc(d.hint)})</span>` : ''}
       </div>`).join('')}</div>
