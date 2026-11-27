@@ -203,6 +203,7 @@ function route() {
   const views = { '': home, uoe: () => section('uoe'), reading: () => section('reading'), ex: () => exercise(arg),
      drills: () => drills(arg), writing: () => arg ? writingTask(arg) : writingList(), progress, puntaje: calculator };
   (views[view] || home)();
+  window.FCEHighlight?.restore($app);
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
@@ -407,35 +408,35 @@ function exercise(id) {
   let body = '';
 
   if (ex.part === 'uoe1') {
-    body = `<div class="card text">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><select class="gap" data-i="${i}"><option value="">—</option>${
+    body = `<div class="card text hl-zone">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><select class="gap" data-i="${i}"><option value="">—</option>${
       ex.items[i].options.map((o, k) => `<option value="${k}">${LETTERS[k]} ${esc(o)}</option>`).join('')}</select>`)}</div>`;
   } else if (ex.part === 'uoe2') {
-    body = `<div class="card text">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><input class="gap" data-i="${i}" autocomplete="off" spellcheck="false">`)}</div>`;
+    body = `<div class="card text hl-zone">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><input class="gap" data-i="${i}" autocomplete="off" spellcheck="false">`)}</div>`;
   } else if (ex.part === 'uoe3') {
-    body = `<div class="card text">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><input class="gap" data-i="${i}" autocomplete="off" spellcheck="false"><span class="keyword">${esc(ex.items[i].word)}</span>`)}</div>`;
+    body = `<div class="card text hl-zone">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><input class="gap" data-i="${i}" autocomplete="off" spellcheck="false"><span class="keyword">${esc(ex.items[i].word)}</span>`)}</div>`;
   } else if (ex.part === 'uoe4') {
     body = `<div class="card">${ex.items.map((it, i) => `<div class="q">
-      <div><span class="gapnum">${i + 1}</span>${esc(it.s1)}</div>
+      <div class="hl-zone"><span class="gapnum">${i + 1}</span>${esc(it.s1)}</div>
       <div class="keyword" style="margin:.35rem 0">${esc(it.key)}</div>
       <div>${esc(it.before)} <input class="gap" data-i="${i}" style="min-width:16rem" autocomplete="off" spellcheck="false"> ${esc(it.after)}</div>
       <div class="warnline" data-warn="${i}"></div></div>`).join('')}</div>`;
   } else if (ex.part === 'rd5') {
     body = `<div class="split">
-      <div class="card text sticky">${paragraphs(ex.text, () => '')}</div>
+      <div class="card text sticky hl-zone">${paragraphs(ex.text, () => '')}</div>
       <div class="card">${ex.questions.map((q, i) => `<div class="q"><b>${i + 1}.</b> ${esc(q.q)}
         ${q.options.map((o, k) => `<label class="opt" data-q="${i}" data-k="${k}"><input type="radio" name="q${i}" value="${k}"> <b>${LETTERS[k]}</b> ${esc(o)}</label>`).join('')}</div>`).join('')}</div></div>`;
   } else if (ex.part === 'rd6') {
     const keys = Object.keys(ex.sentences);
     body = `<div class="split">
       <div class="card text">${paragraphs(ex.text, i => `<span class="gapnum">${i + 1}</span><select class="gap" data-i="${i}" style="min-width:4rem"><option value="">—</option>${keys.map(k => `<option>${k}</option>`).join('')}</select>`)}</div>
-      <div class="card sticky"><h3>Sentences</h3>${keys.map(k => `<div class="sent" data-s="${k}"><b>${k}</b>${esc(ex.sentences[k])}</div>`).join('')}</div></div>`;
+      <div class="card sticky"><h3>Sentences</h3>${keys.map(k => `<div class="sent hl-zone" data-s="${k}"><b>${k}</b>${esc(ex.sentences[k])}</div>`).join('')}</div></div>`;
   } else if (ex.part === 'rd7') {
     const keys = Object.keys(ex.sections);
     body = `<div class="split">
       <div class="card"><h3>${esc(ex.ask || 'Which person…')}</h3>${ex.questions.map((q, i) => `<div class="q" style="display:flex;gap:.6rem;align-items:center">
         <select class="gap" data-i="${i}" style="min-width:4rem"><option value="">—</option>${keys.map(k => `<option>${k}</option>`).join('')}</select>
         <span><b>${i + 1}.</b> ${esc(q.q)}</span></div>`).join('')}</div>
-      <div class="card sticky">${keys.map(k => `<div class="q"><h3>${k} · ${esc(ex.sections[k].title)}</h3><div class="small">${esc(ex.sections[k].text)}</div></div>`).join('')}</div></div>`;
+      <div class="card sticky">${keys.map(k => `<div class="q"><h3>${k} · ${esc(ex.sections[k].title)}</h3><div class="small hl-zone">${esc(ex.sections[k].text)}</div></div>`).join('')}</div></div>`;
   }
 
   $app.innerHTML = `
@@ -443,6 +444,7 @@ function exercise(id) {
     <div class="ex-head"><div><span class="tag">${SECTIONS[P.section].name} · ${P.label} — ${P.name}</span><h1>${esc(ex.title)}</h1></div>
       <div class="timer" id="timer"></div></div>
     <div class="instr">${P.instr}</div>
+    <p class="hl-tip">Tip: seleccioná palabras del texto para subrayarlas · clic encima para quitarlas · Ctrl+Z deshace.</p>
     ${body}
     <div class="actions"><button class="primary" id="check">Corregir</button><button id="reset">Reiniciar</button>
       <span class="small muted">Mejor resultado: ${badge(bestFor(ex.id))}</span></div>
@@ -709,7 +711,8 @@ function writingTask(id) {
         </div>
       </div>
       <div class="sticky">
-        <div class="prompt">${esc(w.prompt)}</div>
+        <div class="prompt hl-zone" id="wprompt" data-hl="w:${w.id}">${esc(w.prompt)}</div>
+        <div class="hl-tip">Seleccioná las palabras clave del enunciado para subrayarlas (clic encima las quita, Ctrl+Z deshace). Quedan guardadas. <button class="link" id="whlclear">Quitar subrayado</button></div>
         <div class="card" style="margin-top:1rem"><h3>Chequeo automático</h3><div id="wnotes" class="small"></div>
           <p class="small muted" style="margin-bottom:0">Es una heurística rápida; la corrección real es con <code>/writing</code>.</p></div>
         <div class="card" style="margin-top:1rem"><h3>Checklist · ${W_TYPES[w.type]}</h3><ul class="check">${CHECKLIST[w.type].map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
@@ -738,6 +741,7 @@ function writingTask(id) {
     const tick = () => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); el.textContent = s ? fmtTime(s) : '¡Tiempo!'; el.classList.toggle('over', s < 300); if (!s) stopTimer(); };
     tick(); timerId = setInterval(tick, 1000); $('#wstart').textContent = 'Reiniciar timer';
   };
+  $('#whlclear').onclick = () => window.FCEHighlight?.clear($('#wprompt'));
   $('#wclear').onclick = () => { if (confirm('¿Borrar el borrador?')) { delete state.drafts[id]; save(); writingTask(id); } };
   $('#wcopy').onclick = async () => {
     const payload = `Tarea: ${w.id} (Part ${w.part} · ${w.type}) — ${w.title}\n\n${w.prompt}\n\n--- MI TEXTO ---\n${ta.value.trim()}\n`;
